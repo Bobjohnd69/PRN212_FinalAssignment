@@ -1,9 +1,5 @@
 {
   "ConnectionStrings": {
-    "SqlConnection": "Server=localhost;database=HOTEL;Trusted_Connection=SSPI;Encrypt=false;TrustServerCertificate=true"
-  },
-  "AdminAccount": {
-    "Email": "admin@gmail.com",
-    "Password": "quocthinh03@"
+    "DefaultConnectionStringDB": "server =(local); database=HotelManagement;uid=sa;pwd=12345; TrustServerCertificate=True"
   }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Repo.Hotel;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -26,7 +25,6 @@ namespace PROJECT
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<Login>();
-            services.AddScoped<HotelContext>();
         }
     }
 

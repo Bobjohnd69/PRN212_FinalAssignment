@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Repo;
-using Repo.Hotel;
+using Repository.Models;
+using Repository.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,56 +20,46 @@ namespace PROJECT
     /// <summary>
     /// Interaction logic for HomeAdmin.xaml
     /// </summary>
-    public partial class HomeAdmin : Window
+    public partial class HomeAdmin
     {
-        private HotelContext context;
-        public HomeAdmin(HotelContext _context)
+
+        UserServices userService;
+        RoomServices roomService;
+        ServiceServices serviceService;
+        public HomeAdmin()
         {
             InitializeComponent();
-            context = _context;
+            userService = new UserServices();
+            roomService = new RoomServices();
+            serviceService = new ServiceServices();
             pageLoad();
-
         }
 
         private void pageLoad()
         {
             //tab 1
-            ListCustomer.ItemsSource = context.Customers.ToList();
+            var listUser = userService.GetAll();
+            ListUser.ItemsSource = listUser;
             //tab 2
-            cmbRoomType.ItemsSource = context.RoomTypes.ToList();
-            cmbRoomType.DisplayMemberPath = "RoomTypeName";
-            cmbRoomType.SelectedValuePath = "RoomTypeId";
-            ListRoom.ItemsSource = context.RoomInformations
-            .Select(p => new Room
-            {
-                RoomId = p.RoomId,
-                RoomNumber = p.RoomNumber,
-                RoomDetailDescription = p.RoomDetailDescription,
-                RoomMaxCapacity = p.RoomMaxCapacity,
-                RoomStatus = p.RoomStatus,
-                RoomPricePerDay = p.RoomPricePerDay,
-                RoomTypeId = p.RoomTypeId,
-                RoomTypeName = p.RoomType.RoomTypeName,
-            })
-            .ToList();
-            ListRoom.DataContext = ListRoom.ItemsSource;
+            var listRoom = roomService.GetAll();
+            ListRoom.ItemsSource = listRoom;
 
         }
 
         //btnlogout
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CustomerSession.ClearSession();
+            UserSession.ClearSession();
             this.Close();
         }
 
         //tabcontrol 1
-        private void btnCustomerAdd_Click(object sender, RoutedEventArgs e)
+        private void btnUserAdd_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var cus = new Customer();
-                if (DateOnly.TryParse(txtCustomerBirth.Text, out DateOnly datetime))
+                var user = new User();
+                if (DateOnly.TryParse(txtUserBirthday.Text, out DateOnly datetime))
                 {
 
                 }
@@ -77,24 +67,15 @@ namespace PROJECT
                 {
                     MessageBox.Show("Wrong format Date!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                if (Byte.TryParse(txtCustomerStatus.Text, out byte status))
-                {
-                }
-                else
-                {
-                    MessageBox.Show("Wrong format Status!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                cus.CustomerFullName = txtCustomerFullName.Text;
-                cus.Telephone = txtCustomerTelePhone.Text;
-                cus.EmailAddress = txtCustomerEmail.Text;
-                cus.CustomerBirthday = datetime;
-                cus.CustomerStatus = Convert.ToByte(txtCustomerStatus.Text);
-                cus.Password = txtCustomerPass.Text;
-                context.Customers.Add(cus);
-                context.SaveChanges();
+                user.FullName = txtUserFullName.Text;
+                user.Phone = txtUserPhone.Text;
+                user.Email = txtUserEmail.Text;
+                user.Birthday = datetime;
+                user.Status = cmbUserStatus.SelectedIndex;
+                user.Password = txtUserPassword.Text;
+                userService.Add(user);
                 MessageBox.Show("Add successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                clearCustomer();
+                clearUser();
                 pageLoad();
             }
             catch (Exception ex)
@@ -103,162 +84,154 @@ namespace PROJECT
             }
         }
 
-        private void btnCustomerUpdate_Click(object sender, RoutedEventArgs e)
+        private void btnUserUpdate_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var cus = context.Customers.FirstOrDefault(p => p.CustomerId == Convert.ToInt32(txtCustomerID.Text));
-                if (Byte.TryParse(txtCustomerStatus.Text, out byte status))
-                {
-                }
-                else
-                {
-                    MessageBox.Show("Wrong format Status!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                if (DateOnly.TryParse(txtCustomerBirth.Text, out DateOnly datetime))
-                {
-                }
-                else
-                {
-                    MessageBox.Show("Wrong format Date!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                cus.CustomerFullName = txtCustomerFullName.Text;
-                cus.Telephone = txtCustomerTelePhone.Text;
-                cus.CustomerBirthday = datetime;
-                cus.EmailAddress = txtCustomerEmail.Text;
-                cus.Password = txtCustomerPass.Text;
-                context.Customers.Update(cus);
-                context.SaveChanges();
-                MessageBox.Show("Update successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                clearCustomer();
-                pageLoad();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Update fail!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            /* try
+             {
+                 var cus = context.Customers.FirstOrDefault(p => p.CustomerId == Convert.ToInt32(txtCustomerID.Text));
+                 if (DateOnly.TryParse(txtCustomerBirth.Text, out DateOnly datetime))
+                 {
+                 }
+                 else
+                 {
+                     MessageBox.Show("Wrong format Date!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                     return;
+                 }
+                 cus.CustomerFullName = txtCustomerFullName.Text;
+                 cus.Telephone = txtCustomerTelePhone.Text;
+                 cus.CustomerBirthday = datetime;
+                 cus.EmailAddress = txtCustomerEmail.Text;
+                 cus.Password = txtCustomerPass.Text;
+                 context.Customers.Update(cus);
+                 context.SaveChanges();
+                 MessageBox.Show("Update successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                 clearUser();
+                 pageLoad();
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Update fail!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+             }*/
         }
 
-        private void btnCustomerDelete_Click(object sender, RoutedEventArgs e)
+        private void btnUserDelete_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var cus = context.Customers.FirstOrDefault(p => p.CustomerId == Convert.ToInt32(txtCustomerID.Text));
-                context.Customers.Remove(cus);
-                context.SaveChanges();
-                MessageBox.Show("Delete successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                clearCustomer();
-                pageLoad();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Delete fail!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            /*  try
+              {
+                  var cus = context.Customers.FirstOrDefault(p => p.CustomerId == Convert.ToInt32(txtCustomerID.Text));
+                  context.Customers.Remove(cus);
+                  context.SaveChanges();
+                  MessageBox.Show("Delete successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                  clearUser();
+                  pageLoad();
+              }
+              catch (Exception ex)
+              {
+                  MessageBox.Show("Delete fail!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+              }*/
         }
 
-        private void btnCustomerClear_Click(object sender, RoutedEventArgs e)
+        private void btnUserClear_Click(object sender, RoutedEventArgs e)
         {
-            clearCustomer();
+            clearUser();
         }
-        private void clearCustomer()
+        private void clearUser()
         {
-            //txtCustomerID.Text = string.Empty;
-            //txtCustomerFullName.Text = string.Empty;
-            //txtCustomerTelePhone.Text = string.Empty;
-            //txtCustomerEmail.Text = string.Empty;
-            //txtCustomerStatus.Text = string.Empty;
-            //txtCustomerPass.Text = string.Empty;
-            //txtCustomerPass.Text = string.Empty;
-            ListCustomer.SelectedIndex = -1;
+            txtUserID.Text = string.Empty;
+            txtUserFullName.Text = string.Empty;
+            txtUserPhone.Text = string.Empty;
+            txtUserEmail.Text = string.Empty;
+            cmbUserStatus.SelectedIndex = -1;
+            cmbUserRole.SelectedIndex = -1;
+            txtUserPassword.Text = string.Empty;
         }
 
-        private void btnCustomerSearch_Click(object sender, RoutedEventArgs e)
+        private void btnUserSearch_Click(object sender, RoutedEventArgs e)
         {
-            string search = txtCustomerSearch.Text;
-            ListCustomer.ItemsSource = context.Customers
-                .Where(p => p.CustomerFullName.Contains(search))
-                .ToList();
+            /*            string search = txtCustomerSearch.Text;
+                        ListCustomer.ItemsSource = context.Customers
+                            .Where(p => p.CustomerFullName.Contains(search))
+                            .ToList();*/
         }
 
         //tab control 2
 
-        private void btnRoomClear_Click(object sender, RoutedEventArgs e)
-        {
-            clearRoom();
-        }
+        /* private void btnRoomClear_Click(object sender, RoutedEventArgs e)
+         {
+             clearRoom();
+         }
 
-        private void clearRoom()
-        {
-            txtRoomId.Text = string.Empty;
-            txtRoomNumber.Text = string.Empty;
-            txtRoomDetail.Text = string.Empty;
-            txtRoomCapacity.Text = string.Empty;
-            txtRoomStatus.Text = string.Empty;
-            txtRoomPrice.Text = string.Empty;
-            ListRoom.SelectedIndex = -1;
-            cmbRoomType.SelectedIndex = -1;
-        }
+         private void clearRoom()
+         {
+             txtRoomId.Text = string.Empty;
+             txtRoomNumber.Text = string.Empty;
+             txtRoomDetail.Text = string.Empty;
+             txtRoomCapacity.Text = string.Empty;
+             txtRoomStatus.Text = string.Empty;
+             txtRoomPrice.Text = string.Empty;
+             ListRoom.SelectedIndex = -1;
+             cmbRoomType.SelectedIndex = -1;
+         }
 
-        private void btnRoomDelete_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var cus = context.RoomInformations.FirstOrDefault(p => p.RoomId == Convert.ToInt32(txtRoomId.Text));
-                context.RoomInformations.Remove(cus);
-                context.SaveChanges();
-                MessageBox.Show("Delete successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                clearRoom();
-                pageLoad();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Delete fail!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+         private void btnRoomDelete_Click(object sender, RoutedEventArgs e)
+         {
+             try
+             {
+                 var cus = context.RoomInformations.FirstOrDefault(p => p.RoomId == Convert.ToInt32(txtRoomId.Text));
+                 context.RoomInformations.Remove(cus);
+                 context.SaveChanges();
+                 MessageBox.Show("Delete successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                 clearRoom();
+                 pageLoad();
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Delete fail!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+             }
+         }
 
-        private void btnRoomUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var rom = context.RoomInformations.FirstOrDefault(p => p.RoomId == Convert.ToInt32(txtRoomId.Text));
-                rom.RoomNumber = txtRoomNumber.Text;
-                rom.RoomDetailDescription = txtRoomDetail.Text;
-                rom.RoomMaxCapacity = Convert.ToInt32(txtRoomCapacity.Text);
-                rom.RoomTypeId = Convert.ToInt32(cmbRoomType.SelectedValue);
-                rom.RoomStatus = Convert.ToByte(txtRoomStatus.Text);
-                rom.RoomPricePerDay = Convert.ToDecimal(txtRoomPrice.Text);
-                context.RoomInformations.Update(rom);
-                context.SaveChanges();
-                MessageBox.Show("Update successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                clearCustomer();
-                pageLoad();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Update fail!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+         private void btnRoomUpdate_Click(object sender, RoutedEventArgs e)
+         {
+             try
+             {
+                 var rom = context.RoomInformations.FirstOrDefault(p => p.RoomId == Convert.ToInt32(txtRoomId.Text));
+                 rom.RoomNumber = txtRoomNumber.Text;
+                 rom.RoomDetailDescription = txtRoomDetail.Text;
+                 rom.RoomMaxCapacity = Convert.ToInt32(txtRoomCapacity.Text);
+                 rom.RoomTypeId = Convert.ToInt32(cmbRoomType.SelectedValue);
+                 rom.RoomStatus = Convert.ToByte(txtRoomStatus.Text);
+                 rom.RoomPricePerDay = Convert.ToDecimal(txtRoomPrice.Text);
+                 context.RoomInformations.Update(rom);
+                 context.SaveChanges();
+                 MessageBox.Show("Update successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                 clearCustomer();
+                 pageLoad();
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Update fail!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+             }
+         }*/
 
         private void ListRoom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ListRoom.SelectedItem != null)
-            {
-                Room selected = (Room)ListRoom.SelectedItem;
-                txtRoomId.Text = selected.RoomId.ToString();
-                txtRoomNumber.Text = selected.RoomNumber;
-                txtRoomDetail.Text = selected.RoomDetailDescription;
-                txtRoomCapacity.Text = selected.RoomMaxCapacity.ToString();
-                txtRoomStatus.Text = selected.RoomStatus.ToString();
-                txtRoomPrice.Text = selected.RoomPricePerDay.ToString();
-                cmbRoomType.SelectedIndex = checkSelectedComboBox(selected.RoomTypeName.ToString());
-            }
+            /*            if (ListRoom.SelectedItem != null)
+                        {
+                            Room selected = (Room)ListRoom.SelectedItem;
+                            txtRoomId.Text = selected.RoomId.ToString();
+                            txtRoomNumber.Text = selected.RoomNumber;
+                            txtRoomDetail.Text = selected.RoomDetailDescription;
+                            txtRoomCapacity.Text = selected.RoomMaxCapacity.ToString();
+                            txtRoomStatus.Text = selected.RoomStatus.ToString();
+                            txtRoomPrice.Text = selected.RoomPricePerDay.ToString();
+                            cmbRoomType.SelectedIndex = checkSelectedComboBox(selected.RoomTypeName.ToString());*//*
+             }*/
         }
+ 
 
-        private int checkSelectedComboBox(string roomname)
+        private void checkSelectedComboBox(string roomname)
         {
-            for (int i = 0; i < cmbRoomType.Items.Count; i++)
+/*            for (int i = 0; i < cmbRoomType.Items.Count; i++)
             {
                 var comboBoxItem = cmbRoomType.Items[i] as RoomType;
                 if (comboBoxItem != null && comboBoxItem.RoomTypeName.Equals(roomname))
@@ -266,12 +239,12 @@ namespace PROJECT
                     return i;
                 }
             }
-            return -1;
+            return -1;*/
         }
 
         private void btnRoomSearch_Click(object sender, RoutedEventArgs e)
         {
-            string search = txtRoomrSearch.Text;
+/*            string search = txtRoomrSearch.Text;
             ListRoom.ItemsSource = context.RoomInformations
              .Where(p => p.RoomNumber.Contains(search))
             .Select(p => new Room
@@ -285,30 +258,33 @@ namespace PROJECT
                 RoomTypeId = p.RoomTypeId,
                 RoomTypeName = p.RoomType.RoomTypeName,
             })
-            .ToList();
+            .ToList();*/
         }
 
         private void btnRoomAdd_Click(object sender, RoutedEventArgs e)
         {
-            try
+/*            try
             {
-                var rom = new RoomInformation();
-                rom.RoomNumber = txtRoomNumber.Text;
-                rom.RoomDetailDescription = txtRoomDetail.Text;
-                rom.RoomMaxCapacity = Convert.ToInt32(txtRoomCapacity.Text);
-                rom.RoomTypeId = Convert.ToInt32(cmbRoomType.SelectedValue);
-                rom.RoomStatus = Convert.ToByte(txtRoomStatus.Text);
-                rom.RoomPricePerDay = Convert.ToDecimal(txtRoomPrice.Text);
-                context.RoomInformations.Add(rom);
-                context.SaveChanges();
+                if (!int.TryParse(txtRoomId.Text, out int roomID))
+                {
+                    MessageBox.Show("Number required for Quantity.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                var room = new Room();
+                room.RoomId = roomID;
+                room.RoomDetail = txtRoomDetail.Text;
+                room.RoomCapacity = Convert.ToInt32(txtRoomCapacity.Text);
+                room.RoomType = txtRoomType.Text;
+                room.RoomStatus = cmbRoomStatus.SelectedIndex;
+                room.Price = Convert.ToDecimal(txtRoomPrice.Text);
+                roomService.Add(room);
                 MessageBox.Show("Add successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                clearCustomer();
                 pageLoad();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Add fail! Error: Clear before add new Room.", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            }*/
         }
 
 
@@ -324,8 +300,23 @@ namespace PROJECT
             }
             else
             {
-                CustomerSession.ClearSession();
+                UserSession.ClearSession();
             }
+        }
+
+        private void btnRoomUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRoomDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRoomClear_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
