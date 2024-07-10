@@ -1,6 +1,4 @@
-﻿using Repo.Hotel;
-using Repo;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,13 +20,9 @@ namespace PROJECT
     /// </summary>
     public partial class HomeCustomer : Window
     {
-        private HotelContext context;
-
-        List<Report> roomBokingList = new List<Report>();
-        public HomeCustomer(HotelContext _context)
+        public HomeCustomer()
         {
             InitializeComponent();
-            context = _context;
             Init();
         }
 
@@ -36,7 +30,7 @@ namespace PROJECT
         private void Init()
         {
             // tab control1 
-            int id = CustomerSession.SessionCustomer.CustomerId;
+           /* int id = CustomerSession.SessionCustomer.CustomerId;
             Customer cus = context.Customers.FirstOrDefault(p => p.CustomerId == id);
             if (cus != null)
             {
@@ -59,13 +53,13 @@ namespace PROJECT
             }
 
 
-       
+       */
 
         }
 
         private void btnProfileUpdate_Click(object sender, RoutedEventArgs e)
         {
-            try
+           /* try
             {
                 int id = CustomerSession.SessionCustomer.CustomerId;
                 DateOnly.TryParse(dtProfileDate.Text, out DateOnly birthday);
@@ -81,14 +75,14 @@ namespace PROJECT
             catch (Exception ex)
             {
                 MessageBox.Show("Update Fail!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            }*/
         }
 
         //btnlogout
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
-            CustomerSession.ClearSession();
-            this.Close();
+            /*CustomerSession.ClearSession();
+            this.Close();*/
         }
 
 
@@ -111,7 +105,7 @@ namespace PROJECT
             }
             else
             {
-                CustomerSession.ClearSession();
+                UserSession.ClearSession();
             }
         }
 

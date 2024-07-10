@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Repo.Hotel;
+using Repository.Models;
+using Repository.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,67 +27,49 @@ namespace PROJECT
 
     public partial class Login : Window
     {
-        private HotelContext _context;
-        public Login(HotelContext context)
+        UserServices userService;
+        public Login()
         {
             InitializeComponent();
-            _context = context;
+            userService = new UserServices();
         }
 
         private void txtLogin_Click(object sender, RoutedEventArgs e)
         {
             string email = txtEmailAddress.Text;
             string password = txtPassWord.Password;
-            Customer customer = new Customer();
-            customer = (Customer)_context.Customers
-                .Where(p => p.EmailAddress.Equals(email) && p.Password.Equals(password))
-                .FirstOrDefault();
-            bool isAdmin = checkAdmin(email, password);
+            User user = userService.GetByEmailAndPassword(email, password);
             if (email.Equals("") || password.Equals(""))
             {
                 MessageBox.Show("Please input your Email Address or Password!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            else if (isAdmin)
+
+            if(user == null)
+            {
+                MessageBox.Show("Wrong Email Address or Password, please try again!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (user.Role.Equals("Admin"))
             {
                 MessageBox.Show("Welcome Admin!", "Infomation", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearInfo();
-                HomeAdmin home = new HomeAdmin(_context);
+                HomeAdmin home = new HomeAdmin();
                 home.ShowDialog();
             }
-            else if (customer != null)
+            else if (user != null)
             {
-                MessageBox.Show("Welcome to our hotel!", "Infomation", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(user.Role, "Infomation", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearInfo();
-                CustomerSession.SetSessionCustomer(customer);
-                HomeCustomer home = new HomeCustomer(_context);
+                UserSession.SetSessionUser(user);
+                HomeCustomer home = new HomeCustomer();
                 home.ShowDialog();
             }
             else
             {
                 MessageBox.Show("Wrong Email Address or Password, please try again!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private bool checkAdmin(string email, string password)
-        {
-            // Đọc tệp appsettings.json và tạo Configuration object
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsetting.json", optional: true, reloadOnChange: true);
-
-            IConfigurationRoot configuration = builder.Build();
-
-            // Lấy thông tin tài khoản admin từ Configuration object
-
-            string adminEmail = configuration.GetSection("AdminAccount")["Email"];
-
-            string adminPassword = configuration.GetSection("AdminAccount")["Password"];
-
-            if (adminEmail.Equals(email) && adminPassword.Equals(password))
-            {
-                return true;
-            }
-            return false;
         }
 
         private void clearInfo()
