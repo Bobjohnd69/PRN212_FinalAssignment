@@ -56,10 +56,10 @@ namespace PROJECT
         //tabcontrol 1
         private void btnUserAdd_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
                 var user = new User();
-                if (DateOnly.TryParse(txtUserBirthday.Text, out DateOnly datetime))
+                ComboBoxItem selectedStatusItem = cmbUserStatus.SelectedItem as ComboBoxItem;
+                ComboBoxItem selectedRoleItem = cmbUserRole.SelectedItem as ComboBoxItem;
+            if (DateOnly.TryParse(txtUserBirthday.Text, out DateOnly datetime))
                 {
 
                 }
@@ -67,21 +67,22 @@ namespace PROJECT
                 {
                     MessageBox.Show("Wrong format Date!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+                user.UserId = Guid.NewGuid();
                 user.FullName = txtUserFullName.Text;
                 user.Phone = txtUserPhone.Text;
                 user.Email = txtUserEmail.Text;
                 user.Birthday = datetime;
-                user.Status = cmbUserStatus.SelectedIndex;
+                user.Status = Convert.ToInt32(selectedStatusItem.Tag);
+                user.Role = selectedRoleItem.Content.ToString();
                 user.Password = txtUserPassword.Text;
                 userService.Add(user);
                 MessageBox.Show("Add successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearUser();
                 pageLoad();
-            }
-            catch (Exception ex)
+/*            catch (Exception ex)
             {
                 MessageBox.Show("Add fail! Error: Clear before add new cusstomer.", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            }*/
         }
 
         private void btnUserUpdate_Click(object sender, RoutedEventArgs e)
@@ -137,7 +138,6 @@ namespace PROJECT
         }
         private void clearUser()
         {
-            txtUserID.Text = string.Empty;
             txtUserFullName.Text = string.Empty;
             txtUserPhone.Text = string.Empty;
             txtUserEmail.Text = string.Empty;
