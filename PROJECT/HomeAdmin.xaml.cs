@@ -59,7 +59,9 @@ namespace PROJECT
                 var user = new User();
                 ComboBoxItem selectedStatusItem = cmbUserStatus.SelectedItem as ComboBoxItem;
                 ComboBoxItem selectedRoleItem = cmbUserRole.SelectedItem as ComboBoxItem;
-            if (DateOnly.TryParse(txtUserBirthday.Text, out DateOnly datetime))
+            try
+            {
+                if (DateOnly.TryParse(txtUserBirthday.Text, out DateOnly datetime))
                 {
 
                 }
@@ -79,10 +81,12 @@ namespace PROJECT
                 MessageBox.Show("Add successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearUser();
                 pageLoad();
-/*            catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Add fail! Error: Clear before add new cusstomer.", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-            }*/
+            }
+
         }
 
         private void btnUserUpdate_Click(object sender, RoutedEventArgs e)
