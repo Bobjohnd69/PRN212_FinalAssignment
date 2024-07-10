@@ -66,10 +66,6 @@ namespace PROJECT
                 HomeStaff home = new HomeStaff();
                 home.ShowDialog();
             }
-            else
-            {
-                MessageBox.Show("Wrong Email Address or Password, please try again!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
         private void clearInfo()
