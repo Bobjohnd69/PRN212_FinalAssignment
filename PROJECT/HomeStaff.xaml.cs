@@ -12,33 +12,45 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.EntityFrameworkCore;
+using Repository.Models;
+using Repository.Services;
 
 namespace PROJECT
 {
     /// <summary>
     /// Interaction logic for HomeCustomer.xaml
     /// </summary>
-    public partial class HomeCustomer : Window
+    public partial class HomeStaff : Window
     {
-        public HomeCustomer()
+        UserServices userService;
+        RoomServices roomService;
+        BookedServices bookedService;
+        RoomServiceServices roomServiceService;
+        public HomeStaff()
         {
             InitializeComponent();
-            Init();
+            userService = new UserServices();
+            roomService = new RoomServices();
+            bookedService = new BookedServices();
+            roomServiceService = new RoomServiceServices();
+            InitProfile();
         }
 
-        //tab control 1
-        private void Init()
+
+        private void Load()
         {
-            // tab control1 
-           /* int id = CustomerSession.SessionCustomer.CustomerId;
-            Customer cus = context.Customers.FirstOrDefault(p => p.CustomerId == id);
-            if (cus != null)
+            
+        }
+        private void InitProfile()
+        {
+            Guid userID = UserSession.SessionUser.UserId;
+            User user = userService.GetByUserID(userID);
+            if (user != null)
             {
-                txtProfileEmail.Text = cus.EmailAddress;
-                txtProfileName.Text = cus.CustomerFullName;
-                txtProfileId.Text = cus.CustomerId.ToString();
-                txtProfilePhone.Text = cus.Telephone;
-                if (DateTime.TryParse(cus.CustomerBirthday.ToString(), out DateTime birthday))
+                txtProfileEmail.Text = user.Email;
+                txtProfileName.Text = user.FullName;
+                txtProfilePhone.Text = user.Phone;
+                if (DateTime.TryParse(user.Birthday.ToString(), out DateTime birthday))
                 {
                     dtProfileDate.SelectedDate = birthday;
                 }
@@ -49,11 +61,8 @@ namespace PROJECT
             }
             else
             {
-                MessageBox.Show("Customer not found!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("User not found!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
-       */
 
         }
 
@@ -81,8 +90,8 @@ namespace PROJECT
         //btnlogout
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
-            /*CustomerSession.ClearSession();
-            this.Close();*/
+            UserSession.ClearSession();
+            this.Close();
         }
 
 
@@ -109,7 +118,20 @@ namespace PROJECT
             }
         }
 
+        private void btnBook_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void btnCheckout_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDone_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 

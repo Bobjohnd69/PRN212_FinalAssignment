@@ -10,7 +10,7 @@
     <Compile Update="HomeAdmin.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="HomeCustomer.xaml.cs">
+    <Compile Update="HomeStaff.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Login.xaml.cs">
@@ -21,7 +21,7 @@
     <Page Update="HomeAdmin.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="HomeCustomer.xaml">
+    <Page Update="HomeStaff.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Login.xaml">

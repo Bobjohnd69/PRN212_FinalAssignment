@@ -63,7 +63,7 @@ namespace PROJECT
                 MessageBox.Show(user.Role, "Infomation", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearInfo();
                 UserSession.SetSessionUser(user);
-                HomeCustomer home = new HomeCustomer();
+                HomeStaff home = new HomeStaff();
                 home.ShowDialog();
             }
             else
