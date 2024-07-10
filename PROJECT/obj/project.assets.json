@@ -3265,23 +3265,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\minht\\.nuget\\packages\\": {},
+    "C:\\Users\\Bao\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FPT\\Semester 5\\PRN212\\PROJECT\\PROJECT\\PROJECT.csproj",
+      "projectUniqueName": "C:\\Users\\Bao\\Documents\\PRN292\\FA\\Final Assignment\\PROJECT\\PROJECT.csproj",
       "projectName": "PROJECT",
-      "projectPath": "D:\\FPT\\Semester 5\\PRN212\\PROJECT\\PROJECT\\PROJECT.csproj",
-      "packagesPath": "C:\\Users\\minht\\.nuget\\packages\\",
-      "outputPath": "D:\\FPT\\Semester 5\\PRN212\\PROJECT\\PROJECT\\obj\\",
+      "projectPath": "C:\\Users\\Bao\\Documents\\PRN292\\FA\\Final Assignment\\PROJECT\\PROJECT.csproj",
+      "packagesPath": "C:\\Users\\Bao\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Bao\\Documents\\PRN292\\FA\\Final Assignment\\PROJECT\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\minht\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Bao\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3296,8 +3296,8 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "D:\\FPT\\Semester 5\\PRN212\\PROJECT\\Repository\\Repository.csproj": {
-              "projectPath": "D:\\FPT\\Semester 5\\PRN212\\PROJECT\\Repository\\Repository.csproj"
+            "C:\\Users\\Bao\\Documents\\PRN292\\FA\\Final Assignment\\Repository\\Repository.csproj": {
+              "projectPath": "C:\\Users\\Bao\\Documents\\PRN292\\FA\\Final Assignment\\Repository\\Repository.csproj"
             }
           }
         }
@@ -3335,7 +3335,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
