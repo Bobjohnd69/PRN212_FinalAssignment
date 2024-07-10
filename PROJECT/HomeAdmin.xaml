@@ -8,7 +8,7 @@
                Title="HomeAdmin" Height="800" Width="1400" ResizeMode="NoResize" Closing="Window_Closing" >
     <Grid Background="#B7B2B2">
         <TabControl Margin="0,49,0,17">
-            <TabItem Header="Customer">
+            <TabItem Header="User">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="83*"/>
@@ -18,14 +18,14 @@
                     <ListView Margin="10,27,428,150" x:Name="ListUser" Grid.ColumnSpan="2">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="userID" DisplayMemberBinding="{Binding Path=userID}"/>
-                                <GridViewColumn Header="fullname" DisplayMemberBinding="{Binding Path=fullname}"/>
-                                <GridViewColumn Header="phone" DisplayMemberBinding="{Binding Path=phone}"/>
-                                <GridViewColumn Header="email" DisplayMemberBinding="{Binding Path=email}"/>
-                                <GridViewColumn Header="birthday" DisplayMemberBinding="{Binding Path=birthday}"/>
-                                <GridViewColumn Header="status" DisplayMemberBinding="{Binding Path=status}"/>
-                                <GridViewColumn Header="role" DisplayMemberBinding="{Binding Path=role}"/>
-                                <GridViewColumn Header="Password" DisplayMemberBinding="{Binding Path=password}"/>
+                                <GridViewColumn Header="userID" DisplayMemberBinding="{Binding Path=UserId}"/>
+                                <GridViewColumn Header="fullname" DisplayMemberBinding="{Binding Path=FullName}"/>
+                                <GridViewColumn Header="phone" DisplayMemberBinding="{Binding Path=Phone}"/>
+                                <GridViewColumn Header="email" DisplayMemberBinding="{Binding Path=Email}"/>
+                                <GridViewColumn Header="birthday" DisplayMemberBinding="{Binding Path=Birthday}"/>
+                                <GridViewColumn Header="status" DisplayMemberBinding="{Binding Path=Status}"/>
+                                <GridViewColumn Header="role" DisplayMemberBinding="{Binding Path=Role}"/>
+                                <GridViewColumn Header="Password" DisplayMemberBinding="{Binding Path=Password}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -74,12 +74,11 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="RoomId" DisplayMemberBinding="{Binding Path=RoomId}"/>
-                                <GridViewColumn Header="RoomNumber" DisplayMemberBinding="{Binding Path=RoomNumber}"/>
-                                <GridViewColumn Header="RoomDetailDescription" DisplayMemberBinding="{Binding Path=RoomDetailDescription}" Width="200"/>
-                                <GridViewColumn Header="RoomMaxCapacity" DisplayMemberBinding="{Binding Path=RoomMaxCapacity}"/>
+                                <GridViewColumn Header="RoomDetailDescription" DisplayMemberBinding="{Binding Path=RoomDetail}" Width="200"/>
+                                <GridViewColumn Header="RoomMaxCapacity" DisplayMemberBinding="{Binding Path=RoomCapacity}"/>
                                 <GridViewColumn Header="RoomTypeName" DisplayMemberBinding="{Binding Path=RoomType}"/>
                                 <GridViewColumn Header="RoomStatus" DisplayMemberBinding="{Binding Path=RoomStatus}"/>
-                                <GridViewColumn Header="RoomPricePerDay" DisplayMemberBinding="{Binding Path=RoomPricePerDay}"/>
+                                <GridViewColumn Header="RoomPricePerDay" DisplayMemberBinding="{Binding Path=Price}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
