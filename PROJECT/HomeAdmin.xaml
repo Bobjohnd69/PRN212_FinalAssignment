@@ -107,6 +107,36 @@
                     <Button x:Name="btnRoomSearch" Content="Search By Room Number" HorizontalAlignment="Left" Margin="12,569,0,0" VerticalAlignment="Top" Height="25" Width="152" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="3" Click="btnRoomSearch_Click" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Service" HorizontalAlignment="Left" Width="43">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="26*"/>
+                        <ColumnDefinition Width="69*"/>
+                        <ColumnDefinition Width="49*"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="377*"/>
+                        <ColumnDefinition Width="823*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListView Margin="7,27,760,150" x:Name="Service" Grid.ColumnSpan="5" SelectionChanged="ListRoom_SelectionChanged" Grid.Column="1">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ServiceId" DisplayMemberBinding="{Binding Path=ServiceId}"  Width="300"/>
+                                <GridViewColumn Header="ServiceName" DisplayMemberBinding="{Binding Path=RoomDetail}" Width="300"/>
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Rectangle HorizontalAlignment="Left" Height="315" Margin="95,27,0,0" Stroke="Black" VerticalAlignment="Top" Width="601" Fill="#B7B2B2" Grid.Column="5"/>
+                    <Label Content="ServiceName" HorizontalAlignment="Left" Margin="363,65,0,0" VerticalAlignment="Top" Grid.Column="5"/>
+                    <TextBox x:Name="txtServiceName" HorizontalAlignment="Left" Margin="162,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="466" Height="111" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Top" RenderTransformOrigin="0.538,0.659" Grid.Column="5"/>
+                    <Button x:Name="btnServiceAdd" Content="Add" HorizontalAlignment="Left" Margin="126,375,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="5" Click="btnServiceAdd_Click" RenderTransformOrigin="0.616,-1.937"/>
+                    <Button x:Name="btnServiceUpdate" Content="Update" HorizontalAlignment="Left" Margin="272,375,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="5" Click="btnServiceUpdate_Click"/>
+                    <Button x:Name="btnServiceDelete" Content="Delete" HorizontalAlignment="Left" Margin="408,375,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="5" Click="btnServiceDelete_Click"/>
+                    <Button x:Name="btnServiceClear" Content="Clear" HorizontalAlignment="Left" Margin="532,375,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnServiceClear_Click" Grid.Column="5" RenderTransformOrigin="0.856,-1.613"/>
+                    <TextBox x:Name="txtServicerSearch" HorizontalAlignment="Left" Margin="10,568,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.ColumnSpan="3"/>
+                    <Button x:Name="btnServiceSearch" Content="Search By Service Name" HorizontalAlignment="Left" Margin="12,569,0,0" VerticalAlignment="Top" Height="25" Width="178" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="3" Click="btnServiceSearch_Click" Grid.ColumnSpan="2"/>
+                </Grid>
+            </TabItem>
         </TabControl>
         <Button x:Name="btnLogout" Content="Logout" HorizontalAlignment="Left" Margin="596,12,0,0" VerticalAlignment="Top" Height="37" Width="94" Click="Button_Click" Grid.Column="1"/>
 

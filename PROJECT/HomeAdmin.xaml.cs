@@ -43,6 +43,9 @@ namespace PROJECT
             //tab 2
             var listRoom = roomService.GetAll();
             ListRoom.ItemsSource = listRoom;
+            //tab 3
+            var listService = serviceService.GetAll();
+            listService.ItemsSource = listService;
 
         }
 
@@ -328,6 +331,8 @@ namespace PROJECT
         }
 
         // control tab 3
+
+
 
     }
 }
