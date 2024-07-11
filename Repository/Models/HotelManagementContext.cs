@@ -55,9 +55,9 @@ public partial class HotelManagementContext : DbContext
                 .HasColumnType("money")
                 .HasColumnName("cost");
             entity.Property(e => e.EndDate).HasColumnName("endDate");
-            entity.Property(e => e.GuessName)
+            entity.Property(e => e.GuestName)
                 .HasMaxLength(100)
-                .HasColumnName("guessName");
+                .HasColumnName("guestName");
             entity.Property(e => e.RoomNumber).HasColumnName("roomNumber");
             entity.Property(e => e.StartDate).HasColumnName("startDate");
             entity.Property(e => e.Status).HasColumnName("status");
@@ -86,7 +86,7 @@ public partial class HotelManagementContext : DbContext
                 .HasColumnName("roomDetail");
             entity.Property(e => e.RoomStatus).HasColumnName("roomStatus");
             entity.Property(e => e.RoomType)
-                .HasMaxLength(1)
+                .HasMaxLength(100)
                 .HasColumnName("roomType");
         });
 

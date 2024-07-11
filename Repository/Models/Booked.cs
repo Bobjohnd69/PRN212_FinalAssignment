@@ -9,7 +9,7 @@ public partial class Booked
 
     public int RoomNumber { get; set; }
 
-    public string GuessName { get; set; } = null!;
+    public string GuestName { get; set; } = null!;
 
     public DateOnly StartDate { get; set; }
 
