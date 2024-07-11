@@ -35,5 +35,10 @@ namespace Repository.Services
             User user = dbSet.FirstOrDefault(x => x.Email == email && x.Password == password);
             return user;
         }
+
+        public User GetByUserID(Guid userID)
+        {
+            return dbSet.FirstOrDefault(x => x.UserId == userID);
+        }
     }
 }
