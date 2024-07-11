@@ -256,16 +256,13 @@ namespace PROJECT
             try
             {
                 var room = new Room();
-                room.RoomId = Convert.ToInt32(txtRoomId.Text); // Assuming RoomId is of type Guid
+                ComboBoxItem selectedStatusItem = cmbRoomStatus.SelectedItem as ComboBoxItem;
+                room.RoomId = Convert.ToInt32(txtRoomId.Text);
                 room.RoomDetail = txtRoomDetail.Text;
                 room.RoomCapacity = Convert.ToInt32(txtRoomCapacity.Text);
                 room.RoomType = txtRoomType.Text;
-
-                if (cmbRoomStatus.SelectedItem != null)
-                    room.RoomStatus = Convert.ToByte(((ComboBoxItem)cmbRoomStatus.SelectedItem).Tag); // Assuming RoomStatus is byte
-
                 room.Price = Convert.ToDecimal(txtRoomPrice.Text);
-
+                room.RoomStatus = Convert.ToInt32(selectedStatusItem.Tag);
                 bool roomIdExists = ((List<Room>)ListRoom.ItemsSource).Any(r => r.RoomId == room.RoomId);
                 if (roomIdExists)
                 {
@@ -277,7 +274,7 @@ namespace PROJECT
                 }
                 
                 MessageBox.Show("Room added successfully!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                //clearRoom();
+                clearRoom();
                 pageLoad();
             }
             catch (Exception ex)
@@ -285,9 +282,6 @@ namespace PROJECT
                 MessageBox.Show($"Failed to add room. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
-
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -302,17 +296,6 @@ namespace PROJECT
                 UserSession.ClearSession();
             }
         }
-
-        private void clearRoomFields()
-        {
-            txtRoomId.Text = string.Empty;
-            txtRoomDetail.Text = string.Empty;
-            txtRoomCapacity.Text = string.Empty;
-            txtRoomType.Text = string.Empty;
-            cmbRoomStatus.SelectedIndex = -1;
-            txtRoomPrice.Text = string.Empty;
-        }
-
         private void btnRoomUpdate_Click(object sender, RoutedEventArgs e)
         {
 
@@ -320,7 +303,28 @@ namespace PROJECT
 
         private void btnRoomDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            if (ListRoom.SelectedItem != null)
+            {
+                var selectedRoom = ListRoom.SelectedItem as Room;
+                if (selectedRoom != null)
+                {
+                    try
+                    {
+                        roomService.Delete(selectedRoom);
+                        MessageBox.Show("Delete successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        clearUser();
+                        pageLoad();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Delete fail! Error: {ex.Message}", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a room to delete.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void btnRoomSearch_Click(object sender, RoutedEventArgs e)
