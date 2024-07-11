@@ -34,12 +34,18 @@ namespace PROJECT
             bookedService = new BookedServices();
             roomServiceService = new RoomServiceServices();
             InitProfile();
+            Load();
         }
 
 
         private void Load()
         {
-            
+            var listRoomService = roomServiceService.GetAll();
+            RoomServiceDataGrid.ItemsSource = listRoomService;
+            var listRoom = roomService.GetAll();
+            RoomDataGrid.ItemsSource = listRoom;
+            var listBooked = bookedService.GetAll();
+            CheckoutDataGrid.ItemsSource = listBooked;
         }
         private void InitProfile()
         {
