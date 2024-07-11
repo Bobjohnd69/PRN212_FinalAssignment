@@ -251,34 +251,6 @@ namespace PROJECT
             ListRoom.SelectedItem = null;
         }
 
-
-        private void btnRoomAdd_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var room = new Room();
-                room.RoomId = Convert.ToInt32(txtRoomId.Text);
-                room.RoomDetail = txtRoomDetail.Text;
-                room.RoomCapacity = Convert.ToInt32(txtRoomCapacity.Text);
-                room.RoomType = txtRoomType.Text;
-
-                if (cmbRoomStatus.SelectedItem != null)
-                    room.RoomStatus = Convert.ToByte(((ComboBoxItem)cmbRoomStatus.SelectedItem).Tag); // Assuming RoomStatus is byte
-
-                room.Price = Convert.ToDecimal(txtRoomPrice.Text);
-
-                bool roomIdExists = ((List<Room>)ListRoom.ItemsSource).Any(r => r.RoomId == room.RoomId);
-                if (roomIdExists)
-                {
-                    MessageBox.Show($"Room with RoomId '{room.RoomId}' already exists!", "Duplicate RoomId", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    roomService.Add(room);
-                }
-
-                MessageBox.Show("Room added successfully!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                //clearRoom();
         private void btnRoomAdd_Click(object sender, RoutedEventArgs e)
         {
             try
