@@ -19,7 +19,7 @@ namespace Repository.Services
             dbSet = context.Set<RoomService>();
         }
 
-        public void Delete(Guid roomId, Guid serviceId)
+        public void Delete(int roomId, Guid serviceId)
         {
             var service = context.RoomServices.FirstOrDefault(rs => rs.RoomId == roomId && rs.ServiceId == serviceId);
             if (service != null)

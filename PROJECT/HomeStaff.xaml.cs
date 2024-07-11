@@ -37,34 +37,11 @@ namespace PROJECT
             Load();
         }
 
-        public void Delete(Guid roomId, Guid serviceId)
-        {
-            var service = _context.RoomServices.FirstOrDefault(rs => rs.RoomId == roomId && rs.ServiceId == serviceId);
-            if (service != null)
-            {
-                _context.RoomServices.Remove(service);
-                _context.SaveChanges();
-            }
-            else
-            {
-                throw new Exception("Service not found");
-            }
-        }
-            Load();
-        }
-
-
         private void Load()
         {
-            var listRoomService = roomServiceService.GetAll();
-            RoomServiceDataGrid.ItemsSource = listRoomService;
-            var listRoom = roomService.GetAll();
-            RoomDataGrid.ItemsSource = listRoom;
-            var listBooked = bookedService.GetAll();
-            CheckoutDataGrid.ItemsSource = listBooked;
             RoomDataGrid.ItemsSource = roomService.GetByStatus(1);
             RoomServiceDataGrid.ItemsSource = roomServiceService.GetByStatus(1);
-            CheckoutDataGrid.ItemsSource= bookedService.GetByStatus(1);
+            CheckoutDataGrid.ItemsSource = bookedService.GetByStatus(1);
         }
         private void InitProfile()
         {
@@ -97,7 +74,7 @@ namespace PROJECT
             {
                 Guid userID = UserSession.SessionUser.UserId;
                 DateOnly.TryParse(dtProfileDate.Text, out DateOnly birthday);
-                User user = userService.GetByUserID(userID); 
+                User user = userService.GetByUserID(userID);
                 if (user != null)
                 {
                     user.Phone = txtProfilePhone.Text;
@@ -107,7 +84,7 @@ namespace PROJECT
                     UserSession.SetSessionUser(user);
                     MessageBox.Show("Update successfully!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -150,10 +127,10 @@ namespace PROJECT
         private void btnBook_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            int roomID= (int)button.Tag;
+            int roomID = (int)button.Tag;
             var room = roomService.GetByRoomId(roomID);
             var AddNewBooking = new AddNewBooking(room);
-            if(AddNewBooking.ShowDialog() == true)
+            if (AddNewBooking.ShowDialog() == true)
             {
                 room.RoomStatus = 0;
                 roomService.Update(room);
@@ -213,7 +190,6 @@ namespace PROJECT
                 MessageBox.Show($"Failed to resolve service: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
     }
 }
 
