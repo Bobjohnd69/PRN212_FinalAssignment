@@ -51,7 +51,7 @@
                     <Button x:Name="btnUserClear" Content="Clear" HorizontalAlignment="Left" Margin="111,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserClear_Click" Grid.Column="2"/>
                     <TextBox x:Name="txUserSearch" HorizontalAlignment="Left" Margin="10,568,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
                     <Button x:Name="btnUserSearch" Content="Search By Name" HorizontalAlignment="Left" Margin="73,569,0,0" VerticalAlignment="Top" Height="25" Width="108" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserSearch_Click" Grid.Column="1" />
-                    <ComboBox x:Name="cmbUserRole" Grid.Column="2" HorizontalAlignment="Left" Margin="21,163,0,0" VerticalAlignment="Top" Width="140" SelectedValue="{Binding SelectedItem.Role, ElementName=ListUser, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox x:Name="cmbUserRole" Grid.Column="2" HorizontalAlignment="Left" Margin="21,163,0,0" VerticalAlignment="Top" Width="140">
                         <ComboBoxItem Content="Admin" />
                         <ComboBoxItem Content="Staff"/>
                     </ComboBox>
