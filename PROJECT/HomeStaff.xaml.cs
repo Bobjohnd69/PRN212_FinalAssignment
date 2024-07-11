@@ -37,6 +37,20 @@ namespace PROJECT
             Load();
         }
 
+        public void Delete(Guid roomId, Guid serviceId)
+        {
+            var service = _context.RoomServices.FirstOrDefault(rs => rs.RoomId == roomId && rs.ServiceId == serviceId);
+            if (service != null)
+            {
+                _context.RoomServices.Remove(service);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("Service not found");
+            }
+        }
+
 
         private void Load()
         {
@@ -136,8 +150,37 @@ namespace PROJECT
 
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                // Get the selected service from the DataGrid
+                var button = sender as Button;
+                if (button == null)
+                {
+                    MessageBox.Show("Button is null!");
+                    return;
+                }
 
+                var selectedService = button.DataContext as RoomService;
+                if (selectedService != null)
+                {
+                    // Delete the selected service from the database
+                    roomServiceService.Delete(selectedService.RoomId, selectedService.ServiceId);
+                    MessageBox.Show("Service resolved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // Reload the data grid to reflect the changes
+                    Load();
+                }
+                else
+                {
+                    MessageBox.Show("Service not found!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to resolve service: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
     }
 }
 
