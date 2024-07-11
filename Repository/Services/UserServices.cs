@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Services
 {
-    public class UserServices:GenericRepository<User>
+    public class UserServices : GenericRepository<User>
     {
 
         HotelManagementContext context;
@@ -38,10 +38,12 @@ namespace Repository.Services
         public List<User> SearchByFullName(string fullName)
         {
             return dbSet.Where(x => x.FullName.Contains(fullName)).ToList();
+        }
 
         public User GetByUserID(Guid userID)
         {
             return dbSet.FirstOrDefault(x => x.UserId == userID);
         }
+
     }
 }

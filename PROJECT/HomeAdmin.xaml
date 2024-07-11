@@ -117,11 +117,11 @@
                         <ColumnDefinition Width="377*"/>
                         <ColumnDefinition Width="823*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView Margin="7,27,760,150" x:Name="Service" Grid.ColumnSpan="5" SelectionChanged="ListRoom_SelectionChanged" Grid.Column="1">
+                    <ListView Margin="7,27,760,150" x:Name="ListService" Grid.ColumnSpan="5" SelectionChanged="ListService_SelectionChanged" Grid.Column="1">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="ServiceId" DisplayMemberBinding="{Binding Path=ServiceId}"  Width="300"/>
-                                <GridViewColumn Header="ServiceName" DisplayMemberBinding="{Binding Path=RoomDetail}" Width="300"/>
+                                <GridViewColumn Header="ServiceName" DisplayMemberBinding="{Binding Path=ServiceName}" Width="300"/>
 
                             </GridView>
                         </ListView.View>

@@ -45,7 +45,7 @@ namespace PROJECT
             ListRoom.ItemsSource = listRoom;
             //tab 3
             var listService = serviceService.GetAll();
-            listService.ItemsSource = listService;
+            ListService.ItemsSource = listService;
 
         }
 
@@ -330,9 +330,79 @@ namespace PROJECT
 
         }
 
-        // control tab 3
+
+        // tab 3
+
+        private void ListService_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListService.SelectedItem is Service selectedService)
+            {
+                txtServiceName.Text = selectedService.ServiceName;
+            }
+        }
 
 
+        private void btnServiceAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtServiceName.Text))
+            {
+                MessageBox.Show("Service Name cannot be empty.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
+            var service = new Service
+            {
+                ServiceId = Guid.NewGuid(),
+                ServiceName = txtServiceName.Text
+            };
+            serviceService.Add(service);
+            MessageBox.Show("Add successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            pageLoad();
+        }
+        private void btnServiceUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtServiceName.Text))
+            {
+                MessageBox.Show("Service Name cannot be empty.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (ListService.SelectedItem is Service selectedService)
+            {
+                selectedService.ServiceName = txtServiceName.Text;
+                serviceService.Update(selectedService);
+                pageLoad();
+                MessageBox.Show("Update Success.", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Please select a service to update.", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void btnServiceDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (ListService.SelectedItem is Service selectedService)
+            {
+                serviceService.Delete(selectedService);
+                pageLoad();
+                MessageBox.Show("Delete successful", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Please select a service to delete.", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void btnServiceClear_Click(object sender, RoutedEventArgs e)
+        {
+            txtServiceName.Clear();
+            ListService.SelectedItem = null;
+        }
+
+         private void btnServiceSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var services = serviceService.SearchServices(txtServiceName.Text);
+            ListService.ItemsSource = services;
+        }
     }
 }
