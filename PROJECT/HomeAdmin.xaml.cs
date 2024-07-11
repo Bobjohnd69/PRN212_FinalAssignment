@@ -256,7 +256,6 @@ namespace PROJECT
             try
             {
                 var room = new Room();
-                ComboBoxItem selectedStatusItem = cmbRoomStatus.SelectedItem as ComboBoxItem;
                 room.RoomId = Convert.ToInt32(txtRoomId.Text);
                 room.RoomDetail = txtRoomDetail.Text;
                 room.RoomCapacity = Convert.ToInt32(txtRoomCapacity.Text);
@@ -272,7 +271,7 @@ namespace PROJECT
                 {
                     roomService.Add(room);
                 }
-                
+
                 MessageBox.Show("Room added successfully!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearRoom();
                 pageLoad();
