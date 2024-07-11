@@ -33,5 +33,9 @@ namespace Repository.Services
         {
             return dbSet.FirstOrDefault(x => x.RoomId == roomId);
         }
+        public List<Room> SearchByRoomID(int roomId)
+        {
+            return dbSet.Where(r => r.RoomId.Equals(roomId)).ToList();
+        }
     }
 }
