@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\THINH\\source\\repos\\PRN212_F\\Repository\\Repository.csproj": {}
+    "D:\\New folder\\Repository\\Repository.csproj": {}
   },
   "projects": {
-    "C:\\Users\\THINH\\source\\repos\\PRN212_F\\Repository\\Repository.csproj": {
+    "D:\\New folder\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\THINH\\source\\repos\\PRN212_F\\Repository\\Repository.csproj",
+        "projectUniqueName": "D:\\New folder\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "C:\\Users\\THINH\\source\\repos\\PRN212_F\\Repository\\Repository.csproj",
-        "packagesPath": "C:\\Users\\THINH\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\THINH\\source\\repos\\PRN212_F\\Repository\\obj\\",
+        "projectPath": "D:\\New folder\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\minht\\.nuget\\packages\\",
+        "outputPath": "D:\\New folder\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\THINH\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\minht\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -90,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
