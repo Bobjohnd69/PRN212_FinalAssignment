@@ -50,7 +50,9 @@ namespace PROJECT
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             UserSession.ClearSession();
+            var login = new Login();
             this.Close();
+            login.Show();
         }
 
         //tabcontrol 1

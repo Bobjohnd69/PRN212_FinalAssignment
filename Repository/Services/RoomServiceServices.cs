@@ -37,5 +37,15 @@ namespace Repository.Services
         {
             return dbSet.Where(x => x.Status == status).ToList();
         }
+
+        public void Add(RoomService roomService)
+        {
+            dbSet.Add(roomService);
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
+        }
     }
 }
