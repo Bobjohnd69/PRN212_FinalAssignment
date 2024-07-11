@@ -5,21 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PROJECT"
         mc:Ignorable="d"
-        Title="AddNewBooking" Height="582" Width="628">
-    <Grid>
+        Title="AddNewBooking" Height="384" Width="536">
+    <Grid Background="#FFE5E5E5">
         <Label Content="Room Number" HorizontalAlignment="Left" Margin="29,29,0,0" VerticalAlignment="Top"/>
         <Label Content="Guest Name" HorizontalAlignment="Left" Margin="335,29,0,0" VerticalAlignment="Top"/>
-        <Label Content="Start Date" HorizontalAlignment="Left" Margin="29,119,0,0" VerticalAlignment="Top"/>
-        <Label Content="End date" HorizontalAlignment="Left" Margin="335,119,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.726,-0.022"/>
+        <Label Content="Start Date" HorizontalAlignment="Left" Margin="29,106,0,0" VerticalAlignment="Top"/>
+        <Label Content="End date" HorizontalAlignment="Left" Margin="335,106,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.726,-0.022"/>
         <TextBox x:Name="txtRoomNumber" HorizontalAlignment="Left" Margin="46,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="63" IsEnabled="False"/>
 
-        <TextBox x:Name="txtGuestName" HorizontalAlignment="Left" Margin="347,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="167"/>
-        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="128,299,0,0" VerticalAlignment="Top" Height="42" Width="97" Click="btnCancel_Click"/>
-        <Button x:Name="btnConfirm" Content="Confirm" HorizontalAlignment="Left" Margin="373,299,0,0" VerticalAlignment="Top" Height="42" Width="98" Click="btnConfirm_Click"/>
-        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="40,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="136" IsEnabled="False"/>
-        <Label Content="Price" HorizontalAlignment="Left" Margin="29,200,0,0" VerticalAlignment="Top"/>
-        <DatePicker x:Name="dpStartDate" HorizontalAlignment="Left" Margin="40,150,0,0" VerticalAlignment="Top" Height="26" Width="111"/>
-        <DatePicker x:Name="dpEndDate" HorizontalAlignment="Left" Margin="347,150,0,0" VerticalAlignment="Top" Height="26" Width="111"/>
+        <TextBox x:Name="txtGuestName" HorizontalAlignment="Left" Margin="335,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="168"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="119,273,0,0" VerticalAlignment="Top" Height="42" Width="97" Click="btnCancel_Click"/>
+        <Button x:Name="btnConfirm" Content="Confirm" HorizontalAlignment="Left" Margin="363,273,0,0" VerticalAlignment="Top" Height="42" Width="98" Click="btnConfirm_Click"/>
+        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="32,212,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="136" IsEnabled="False"/>
+        <Label Content="Price" HorizontalAlignment="Left" Margin="29,181,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="dpStartDate" HorizontalAlignment="Left" Margin="32,137,0,0" VerticalAlignment="Top" Height="26" Width="112" RenderTransformOrigin="0.423,0.263"/>
+        <DatePicker x:Name="dpEndDate" HorizontalAlignment="Left" Margin="335,137,0,0" VerticalAlignment="Top" Height="26" Width="111"/>
 
     </Grid>
 </Window>

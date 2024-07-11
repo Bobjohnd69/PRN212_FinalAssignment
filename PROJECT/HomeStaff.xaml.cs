@@ -37,12 +37,11 @@ namespace PROJECT
             Load();
         }
 
-
         private void Load()
         {
             RoomDataGrid.ItemsSource = roomService.GetByStatus(1);
             RoomServiceDataGrid.ItemsSource = roomServiceService.GetByStatus(1);
-            CheckoutDataGrid.ItemsSource= bookedService.GetByStatus(1);
+            CheckoutDataGrid.ItemsSource = bookedService.GetByStatus(1);
         }
         private void InitProfile()
         {
@@ -75,7 +74,7 @@ namespace PROJECT
             {
                 Guid userID = UserSession.SessionUser.UserId;
                 DateOnly.TryParse(dtProfileDate.Text, out DateOnly birthday);
-                User user = userService.GetByUserID(userID); 
+                User user = userService.GetByUserID(userID);
                 if (user != null)
                 {
                     user.Phone = txtProfilePhone.Text;
@@ -85,7 +84,7 @@ namespace PROJECT
                     UserSession.SetSessionUser(user);
                     MessageBox.Show("Update successfully!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -97,7 +96,9 @@ namespace PROJECT
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
             UserSession.ClearSession();
+            var login = new Login();
             this.Close();
+            login.Show();
         }
 
 
@@ -128,10 +129,10 @@ namespace PROJECT
         private void btnBook_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            int roomID= (int)button.Tag;
+            int roomID = (int)button.Tag;
             var room = roomService.GetByRoomId(roomID);
             var AddNewBooking = new AddNewBooking(room);
-            if(AddNewBooking.ShowDialog() == true)
+            if (AddNewBooking.ShowDialog() == true)
             {
                 room.RoomStatus = 0;
                 roomService.Update(room);
@@ -161,7 +162,35 @@ namespace PROJECT
 
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                // Get the selected service from the DataGrid
+                var button = sender as Button;
+                if (button == null)
+                {
+                    MessageBox.Show("Button is null!");
+                    return;
+                }
 
+                var selectedService = button.DataContext as RoomService;
+                if (selectedService != null)
+                {
+                    // Delete the selected service from the database
+                    roomServiceService.Delete(selectedService.RoomId, selectedService.ServiceId);
+                    MessageBox.Show("Service resolved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // Reload the data grid to reflect the changes
+                    Load();
+                }
+                else
+                {
+                    MessageBox.Show("Service not found!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to resolve service: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PROJECT"
         mc:Ignorable="d"
-               Title="HomeAdmin" Height="800" Width="1400" ResizeMode="NoResize" Closing="Window_Closing" >
+                  Title="HomeAdmin" Height="800" Width="1400" ResizeMode="NoResize" Closing="Window_Closing" >
     <Grid Background="#B7B2B2">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="668*"/>

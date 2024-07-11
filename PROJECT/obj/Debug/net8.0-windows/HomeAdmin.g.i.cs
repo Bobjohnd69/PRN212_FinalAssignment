@@ -341,7 +341,7 @@ namespace PROJECT {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PROJECT;component/homeadmin.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/PROJECT;V1.0.0.0;component/homeadmin.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\HomeAdmin.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
