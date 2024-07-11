@@ -395,7 +395,108 @@ namespace PROJECT
 
         private void btnRoomDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (ListRoom.SelectedItem != null)
+            {
+                var selectedRoom = ListRoom.SelectedItem as Room;
+                if (selectedRoom != null)
+                {
+                    try
+                    {
+                        roomService.Delete(selectedRoom);
+                        MessageBox.Show("Delete successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        clearRoom();
+                        pageLoad();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Delete fail! Error: {ex.Message}", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a room to delete.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
 
+        private void btnRoomSearch_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Get room ID from user input
+                if (!int.TryParse(txtRoomSearch.Text.Trim(), out int roomId))
+                {
+                    MessageBox.Show("Please enter a valid Room ID.", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Call service method to search for rooms by Room ID
+                var rooms = roomService.SearchByRoomID(roomId);
+
+                if (rooms.Count > 0)
+                {
+                    // Bind search results to ListRoom
+                    ListRoom.ItemsSource = rooms;
+                }
+                else
+                {
+                    MessageBox.Show("No rooms found with the given Room ID.", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+                    // Clear ListRoom if no rooms found
+                    ListRoom.ItemsSource = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error searching rooms: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // tab 3
+
+        private void ListService_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListService.SelectedItem is Service selectedService)
+            {
+                txtServiceName.Text = selectedService.ServiceName;
+            }
+        }
+
+
+        private void btnServiceAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtServiceName.Text))
+            {
+                MessageBox.Show("Service Name cannot be empty.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var service = new Service
+            {
+                ServiceId = Guid.NewGuid(),
+                ServiceName = txtServiceName.Text
+            };
+            serviceService.Add(service);
+            MessageBox.Show("Add successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            pageLoad();
+        }
+        private void btnServiceUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtServiceName.Text))
+            {
+                MessageBox.Show("Service Name cannot be empty.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (ListService.SelectedItem is Service selectedService)
+            {
+                selectedService.ServiceName = txtServiceName.Text;
+                serviceService.Update(selectedService);
+                pageLoad();
+                MessageBox.Show("Update Success.", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Please select a service to update.", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void btnServiceDelete_Click(object sender, RoutedEventArgs e)
