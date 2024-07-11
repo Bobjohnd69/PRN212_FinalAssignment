@@ -21,9 +21,6 @@
     <Page Update="HomeAdmin.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="HomeCustomer.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Login.xaml">
       <SubType>Designer</SubType>
     </Page>
