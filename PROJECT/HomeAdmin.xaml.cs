@@ -63,7 +63,39 @@ namespace PROJECT
             if (ListUser.SelectedItem != null)
             {
                 var selectedUser = ListUser.SelectedItem as User;
+                if (selectedUser != null)
+                {
+                    // Populate the input fields with the selected user's details
+                    txtUserFullName.Text = selectedUser.FullName;
+                    txtUserPhone.Text = selectedUser.Phone;
+                    txtUserEmail.Text = selectedUser.Email;
+                    txtUserBirthday.Text = selectedUser.Birthday.ToString("MM/dd/yyyy");
+                    txtUserPassword.Text = selectedUser.Password;
 
+                    // Set the status and role combo boxes to the selected user's status and role
+                    foreach (ComboBoxItem item in cmbUserStatus.Items)
+                    {
+                        if (item.Tag != null && item.Tag.ToString() == selectedUser.Status.ToString())
+                        {
+                            cmbUserStatus.SelectedItem = item;
+                            break;
+                        }
+                    }
+
+                    foreach (ComboBoxItem item in cmbUserRole.Items)
+                    {
+                        if (item.Content != null && item.Content.ToString() == selectedUser.Role)
+                        {
+                            cmbUserRole.SelectedItem = item;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Clear the input fields if no user is selected
+                clearUser();
             }
         }
         private void btnUserAdd_Click(object sender, RoutedEventArgs e)
@@ -114,63 +146,60 @@ namespace PROJECT
         }
         private void btnUserUpdate_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (ListUser.SelectedItem != null)
             {
-                if (ListUser.SelectedItem == null)
+                try
                 {
-                    MessageBox.Show("Please select a user to update.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
+                    var selectedUser = ListUser.SelectedItem as User;
+                    if (selectedUser == null)
+                    {
+                        MessageBox.Show("Selected user is invalid.", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Validate input fields
+                    if (string.IsNullOrEmpty(txtUserFullName.Text) ||
+                        string.IsNullOrEmpty(txtUserPhone.Text) ||
+                        string.IsNullOrEmpty(txtUserEmail.Text) ||
+                        string.IsNullOrEmpty(txtUserBirthday.Text) ||
+                        string.IsNullOrEmpty(txtUserPassword.Text) ||
+                        cmbUserStatus.SelectedItem == null ||
+                        cmbUserRole.SelectedItem == null)
+                    {
+                        MessageBox.Show("All fields must be filled in.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    // Parse the birthday
+                    if (!DateOnly.TryParse(txtUserBirthday.Text, out DateOnly datetime))
+                    {
+                        MessageBox.Show("Wrong format Date!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Update selected user object
+                    selectedUser.FullName = txtUserFullName.Text;
+                    selectedUser.Phone = txtUserPhone.Text;
+                    selectedUser.Email = txtUserEmail.Text;
+                    selectedUser.Birthday = datetime;
+                    selectedUser.Role = (cmbUserRole.SelectedItem as ComboBoxItem)?.Content.ToString();
+                    selectedUser.Status = Convert.ToInt32((cmbUserStatus.SelectedItem as ComboBoxItem)?.Tag);
+                    selectedUser.Password = txtUserPassword.Text;
+
+                    // Call service method to update user
+                    userService.Update(selectedUser);
+                    MessageBox.Show("Update successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    clearUser();
+                    pageLoad();
                 }
-
-                var selectedUser = ListUser.SelectedItem as User;
-                if (selectedUser == null)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Selected user is invalid.", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    MessageBox.Show($"Update fail! Error: {ex.Message}", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                // Validate input fields
-                if (string.IsNullOrEmpty(txtUserFullName.Text) ||
-                    string.IsNullOrEmpty(txtUserPhone.Text) ||
-                    string.IsNullOrEmpty(txtUserEmail.Text) ||
-                    string.IsNullOrEmpty(txtUserBirthday.Text) ||
-                    string.IsNullOrEmpty(txtUserPassword.Text) ||
-                    cmbUserStatus.SelectedItem == null ||
-                    cmbUserRole.SelectedItem == null)
-                {
-                    MessageBox.Show("All fields must be filled in.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                // Parse the birthday
-                if (!DateOnly.TryParse(txtUserBirthday.Text, out DateOnly datetime))
-                {
-                    MessageBox.Show("Wrong format Date!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                // Create a new User object with updated details
-                var updatedUser = new User
-                {
-                    UserId = selectedUser.UserId,
-                    FullName = txtUserFullName.Text,
-                    Phone = txtUserPhone.Text,
-                    Email = txtUserEmail.Text,
-                    Birthday = datetime,
-                    Role = (cmbUserRole.SelectedItem as ComboBoxItem)?.Content.ToString(),
-                    Status = Convert.ToInt32((cmbUserStatus.SelectedItem as ComboBoxItem)?.Tag),
-                    Password = txtUserPassword.Text
-                };
-
-                // Update user using the service method
-                userService.Update(updatedUser);
-                MessageBox.Show("Update successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                clearUser();
-                pageLoad();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Update fail! Error: {ex.Message}", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select a user to update.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
