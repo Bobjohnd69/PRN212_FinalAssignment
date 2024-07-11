@@ -50,7 +50,9 @@ namespace PROJECT
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             UserSession.ClearSession();
+            var login = new Login();
             this.Close();
+            login.Show();
         }
 
         //tabcontrol 1
@@ -249,19 +251,17 @@ namespace PROJECT
             ListRoom.SelectedItem = null;
         }
 
-
         private void btnRoomAdd_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var room = new Room();
-                ComboBoxItem selectedStatusItem = cmbRoomStatus.SelectedItem as ComboBoxItem;
                 room.RoomId = Convert.ToInt32(txtRoomId.Text);
                 room.RoomDetail = txtRoomDetail.Text;
                 room.RoomCapacity = Convert.ToInt32(txtRoomCapacity.Text);
                 room.RoomType = txtRoomType.Text;
                 room.Price = Convert.ToDecimal(txtRoomPrice.Text);
-                room.RoomStatus = Convert.ToInt32(selectedStatusItem.Tag);
+                room.RoomStatus = Convert.ToInt32(cmbRoomStatus.Tag);
                 bool roomIdExists = ((List<Room>)ListRoom.ItemsSource).Any(r => r.RoomId == room.RoomId);
                 if (roomIdExists)
                 {
@@ -271,7 +271,7 @@ namespace PROJECT
                 {
                     roomService.Add(room);
                 }
-                
+
                 MessageBox.Show("Room added successfully!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearRoom();
                 pageLoad();

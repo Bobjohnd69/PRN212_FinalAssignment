@@ -1,0 +1,25 @@
+﻿<Window x:Class="PROJECT.RoomInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Room Info" Height="400" Width="600">
+    <Grid>
+        <StackPanel>
+            <TextBlock x:Name="txtRoomDetails" Text="Room Details" Margin="10"/>
+            <ListView x:Name="ListViewServices">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Service ID" DisplayMemberBinding="{Binding ServiceId}"/>
+                        <GridViewColumn Header="Service Name" DisplayMemberBinding="{Binding ServiceName}"/>
+                        <GridViewColumn Header="Action">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Call Service" Click="CallService_Click" Tag="{Binding ServiceId}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>

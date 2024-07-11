@@ -28,6 +28,8 @@ namespace PROJECT
     public partial class Login : Window
     {
         UserServices userService;
+        RoomServices roomService;
+        ServiceServices service;
         public Login()
         {
             InitializeComponent();
@@ -56,6 +58,7 @@ namespace PROJECT
                 MessageBox.Show("Welcome Admin!", "Infomation", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearInfo();
                 HomeAdmin home = new HomeAdmin();
+                this.Close();
                 home.ShowDialog();
             }
             else if (user != null)
@@ -64,6 +67,7 @@ namespace PROJECT
                 clearInfo();
                 UserSession.SetSessionUser(user);
                 HomeStaff home = new HomeStaff();
+                this.Close();
                 home.ShowDialog();
             }
         }
@@ -72,11 +76,44 @@ namespace PROJECT
         {
             txtEmailAddress.Clear();
             txtPassWord.Clear();
+            txtRoomNumber.Clear();
+
         }
 
         private void txtCancel_Click(object sender, RoutedEventArgs e)
         {
             clearInfo();
+        }
+
+        private void txtRoom_Click(object sender, RoutedEventArgs e)
+        {
+            roomService = new RoomServices();
+            service = new ServiceServices();
+            var listRoom = roomService.GetAll();
+            if(txtRoomNumber.Text.Length <= 0)
+            {
+                MessageBox.Show("Room id cannot be null!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                int roomId = Convert.ToInt32(txtRoomNumber.Text);
+                var room = listRoom.FirstOrDefault(r => r.RoomId == roomId);
+
+                if (room != null)
+                {
+                    RoomInfoWindow roomInfoWindow = new RoomInfoWindow();
+                    roomInfoWindow.LoadRoomDetails(room.RoomId, room.RoomDetail, service.GetAll());
+                    roomInfoWindow.Show();
+
+                    // Close the login window after showing the RoomInfoWindow
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Room not found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            
         }
     }
 }
