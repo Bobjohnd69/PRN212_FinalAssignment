@@ -7,6 +7,12 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="AddNewBooking.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ConfirmBooking.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="HomeAdmin.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -18,6 +24,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="AddNewBooking.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ConfirmBooking.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="HomeAdmin.xaml">
       <SubType>Designer</SubType>
     </Page>

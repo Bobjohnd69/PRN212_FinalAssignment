@@ -60,7 +60,7 @@ namespace PROJECT
             }
             else if (user != null)
             {
-                MessageBox.Show(user.Role, "Infomation", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Welcome back" + user.FullName, "Infomation", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearInfo();
                 UserSession.SetSessionUser(user);
                 HomeStaff home = new HomeStaff();
