@@ -50,6 +50,8 @@ namespace PROJECT
                 throw new Exception("Service not found");
             }
         }
+            Load();
+        }
 
 
         private void Load()
@@ -60,6 +62,9 @@ namespace PROJECT
             RoomDataGrid.ItemsSource = listRoom;
             var listBooked = bookedService.GetAll();
             CheckoutDataGrid.ItemsSource = listBooked;
+            RoomDataGrid.ItemsSource = roomService.GetByStatus(1);
+            RoomServiceDataGrid.ItemsSource = roomServiceService.GetByStatus(1);
+            CheckoutDataGrid.ItemsSource= bookedService.GetByStatus(1);
         }
         private void InitProfile()
         {
@@ -88,23 +93,26 @@ namespace PROJECT
 
         private void btnProfileUpdate_Click(object sender, RoutedEventArgs e)
         {
-           /* try
+            try
             {
-                int id = CustomerSession.SessionCustomer.CustomerId;
+                Guid userID = UserSession.SessionUser.UserId;
                 DateOnly.TryParse(dtProfileDate.Text, out DateOnly birthday);
-                Customer cus = context.Customers.FirstOrDefault(p => p.CustomerId == id);
-                cus.Telephone = txtProfilePhone.Text;
-                cus.CustomerFullName = txtProfileName.Text;
-                cus.CustomerBirthday = birthday;
-                context.Customers.Update(cus);
-                context.SaveChanges();
-                CustomerSession.SetSessionCustomer(cus);
-                MessageBox.Show("Update successfully!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                User user = userService.GetByUserID(userID); 
+                if (user != null)
+                {
+                    user.Phone = txtProfilePhone.Text;
+                    user.FullName = txtProfileName.Text;
+                    user.Birthday = birthday;
+                    userService.Update(user);
+                    UserSession.SetSessionUser(user);
+                    MessageBox.Show("Update successfully!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Update Fail!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-            }*/
+            }
         }
 
         //btnlogout
@@ -113,6 +121,7 @@ namespace PROJECT
             UserSession.ClearSession();
             this.Close();
         }
+
 
 
 
@@ -140,12 +149,36 @@ namespace PROJECT
 
         private void btnBook_Click(object sender, RoutedEventArgs e)
         {
-
+            var button = sender as Button;
+            int roomID= (int)button.Tag;
+            var room = roomService.GetByRoomId(roomID);
+            var AddNewBooking = new AddNewBooking(room);
+            if(AddNewBooking.ShowDialog() == true)
+            {
+                room.RoomStatus = 0;
+                roomService.Update(room);
+                Load();
+            }
         }
 
         private void btnCheckout_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBoxResult result = MessageBox.Show("Are you sure?", "Confirm", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            if (result == MessageBoxResult.OK)
+            {
+                var button = sender as Button;
+                Guid bookId = (Guid)button.Tag;
+                Booked booked = bookedService.GetByBookId(bookId);
+                if (booked != null)
+                {
+                    Room room = roomService.GetByRoomId(booked.RoomNumber);
+                    booked.Status = 0;
+                    room.RoomStatus = 1;
+                    roomService.Update(room);
+                    bookedService.Update(booked);
+                    Load();
+                }
+            }
         }
 
         private void btnDone_Click(object sender, RoutedEventArgs e)

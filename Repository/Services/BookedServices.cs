@@ -23,5 +23,9 @@ namespace Repository.Services
            return dbSet.Where(x => x.Status == status).ToList();
         }
 
+        public Booked GetByBookId(Guid bookedId) {
+
+            return dbSet.FirstOrDefault(x => x.BookedId == bookedId);
+        }
     }
 }

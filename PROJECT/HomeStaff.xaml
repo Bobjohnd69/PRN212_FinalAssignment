@@ -77,7 +77,7 @@
                     </DataGrid.RenderTransform>
                     <DataGrid.Columns>
                         <DataGridTextColumn x:Name="RoomNumber" Header="Room Number" Binding="{Binding RoomNumber}"/>
-                        <DataGridTextColumn x:Name="GuestName" Header="Guest name" Binding="{Binding GuessName}"/>
+                        <DataGridTextColumn x:Name="GuestName" Header="Guest name" Binding="{Binding GuestName}"/>
                         <DataGridTextColumn x:Name="StartDate" Header="Start Date" Binding="{Binding StartDate}"/>
                         <DataGridTextColumn x:Name="EndDate" Header="End Date" Binding="{Binding EndDate}"/>
                         <DataGridTextColumn x:Name="Cost" Header="Cost" Binding="{Binding Cost}"/>
@@ -85,7 +85,7 @@
                         <DataGridTemplateColumn Header="Make Checkout">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="btnCheckout" Content="Checkout" Click="btnCheckout_Click" Tag="{Binding RoomNumber}"/>
+                                    <Button x:Name="btnCheckout" Content="Checkout" Click="btnCheckout_Click" Tag="{Binding BookedId}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
