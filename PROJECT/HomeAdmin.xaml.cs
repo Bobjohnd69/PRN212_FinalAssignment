@@ -267,28 +267,37 @@ namespace PROJECT
 
         private void btnRoomAdd_Click(object sender, RoutedEventArgs e)
         {
-/*            try
+            try
             {
-                if (!int.TryParse(txtRoomId.Text, out int roomID))
-                {
-                    MessageBox.Show("Number required for Quantity.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
                 var room = new Room();
-                room.RoomId = roomID;
+                room.RoomId = Convert.ToInt32(txtRoomId.Text); // Assuming RoomId is of type Guid
                 room.RoomDetail = txtRoomDetail.Text;
                 room.RoomCapacity = Convert.ToInt32(txtRoomCapacity.Text);
                 room.RoomType = txtRoomType.Text;
-                room.RoomStatus = cmbRoomStatus.SelectedIndex;
+
+                if (cmbRoomStatus.SelectedItem != null)
+                    room.RoomStatus = Convert.ToByte(((ComboBoxItem)cmbRoomStatus.SelectedItem).Tag); // Assuming RoomStatus is byte
+
                 room.Price = Convert.ToDecimal(txtRoomPrice.Text);
-                roomService.Add(room);
-                MessageBox.Show("Add successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                bool roomIdExists = ((List<Room>)ListRoom.ItemsSource).Any(r => r.RoomId == room.RoomId);
+                if (roomIdExists)
+                {
+                    MessageBox.Show($"Room with RoomId '{room.RoomId}' already exists!", "Duplicate RoomId", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    roomService.Add(room);
+                }
+                
+                MessageBox.Show("Room added successfully!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                //clearRoom();
                 pageLoad();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Add fail! Error: Clear before add new Room.", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-            }*/
+                MessageBox.Show($"Failed to add room. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
@@ -306,6 +315,16 @@ namespace PROJECT
             {
                 UserSession.ClearSession();
             }
+        }
+
+        private void clearRoomFields()
+        {
+            txtRoomId.Text = string.Empty;
+            txtRoomDetail.Text = string.Empty;
+            txtRoomCapacity.Text = string.Empty;
+            txtRoomType.Text = string.Empty;
+            cmbRoomStatus.SelectedIndex = -1;
+            txtRoomPrice.Text = string.Empty;
         }
 
         private void btnRoomUpdate_Click(object sender, RoutedEventArgs e)
