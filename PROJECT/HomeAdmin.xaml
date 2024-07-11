@@ -103,7 +103,7 @@
                     <Button x:Name="btnRoomUpdate" Content="Update" HorizontalAlignment="Left" Margin="754,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="4" Click="btnRoomUpdate_Click"/>
                     <Button x:Name="btnRoomDelete" Content="Delete" HorizontalAlignment="Left" Margin="930,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="4" Click="btnRoomDelete_Click"/>
                     <Button x:Name="btnRoomClear" Content="Clear" HorizontalAlignment="Left" Margin="1102,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnRoomClear_Click" Grid.Column="4"/>
-                    <TextBox x:Name="txtRoomrSearch" HorizontalAlignment="Left" Margin="10,568,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.ColumnSpan="3"/>
+                    <TextBox x:Name="txtRoomSearch" HorizontalAlignment="Left" Margin="10,568,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.ColumnSpan="3"/>
                     <Button x:Name="btnRoomSearch" Content="Search By Room Number" HorizontalAlignment="Left" Margin="12,569,0,0" VerticalAlignment="Top" Height="25" Width="152" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="3" Click="btnRoomSearch_Click" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>

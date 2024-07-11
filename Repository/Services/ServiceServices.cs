@@ -11,19 +11,17 @@ namespace Repository.Services
     public class ServiceServices:GenericRepository<Service>
     {
         HotelManagementContext context;
-        DbSet<User> dbSet;
+        DbSet<Service> dbSet;
 
         public ServiceServices()
         {
             context = new HotelManagementContext();
-            dbSet = context.Set<User>();
+            dbSet = context.Set<Service>();
         }
 
         public List<Service> SearchServices(string searchTerm)
         {
-            return context.Services
-                .Where(s => s.ServiceName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            return dbSet.Where(s => s.ServiceName.Contains(searchTerm)).ToList();
         }
 
     }

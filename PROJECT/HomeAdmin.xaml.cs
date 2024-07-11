@@ -229,12 +229,30 @@ namespace PROJECT
 
         private void ListRoom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /* if (ListRoom.SelectedItem != null)
+            if (ListRoom.SelectedItem != null)
             {
-                Room selected = (Room)ListRoom.SelectedItem;
-              
-            }*/
+                var selectedRoom = ListRoom.SelectedItem as Room;
+                if (selectedRoom != null)
+                {
+                    // Display room details in UI controls
+                    txtRoomId.Text = selectedRoom.RoomId.ToString();
+                    txtRoomDetail.Text = selectedRoom.RoomDetail;
+                    txtRoomCapacity.Text = selectedRoom.RoomCapacity.ToString();
+                    txtRoomType.Text = selectedRoom.RoomType;
+                    // Set selected value in ComboBox for RoomStatus
+                    cmbRoomStatus.SelectedValue = selectedRoom.RoomStatus;
+
+                    // Format decimal value for Price
+                    txtRoomPrice.Text = selectedRoom.Price.ToString();
+                }
+            }
+            else
+            {
+                // Clear UI controls if no room is selected
+                clearRoom();
+            }
         }
+
 
         private void btnRoomClear_Click(object sender, RoutedEventArgs e)
         {
@@ -317,17 +335,108 @@ namespace PROJECT
 
         private void btnRoomUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (ListRoom.SelectedItem != null)
+            {
+                try
+                {
+                    var selectedRoom = ListRoom.SelectedItem as Room;
+                    if (selectedRoom == null)
+                    {
+                        MessageBox.Show("Selected room is invalid.", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
 
+                    // Validate input fields
+                    if (string.IsNullOrEmpty(txtRoomDetail.Text) ||
+                        string.IsNullOrEmpty(txtRoomCapacity.Text) ||
+                        string.IsNullOrEmpty(txtRoomType.Text) ||
+                        string.IsNullOrEmpty(txtRoomPrice.Text) ||
+                        cmbRoomStatus.SelectedItem == null)
+                    {
+                        MessageBox.Show("All fields must be filled in.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    // Update selected room object
+                    selectedRoom.RoomDetail = txtRoomDetail.Text;
+                    selectedRoom.RoomCapacity = Convert.ToInt32(txtRoomCapacity.Text);
+                    selectedRoom.RoomType = txtRoomType.Text;
+                    selectedRoom.RoomStatus = Convert.ToByte(((ComboBoxItem)cmbRoomStatus.SelectedItem).Tag);
+                    selectedRoom.Price = Convert.ToDecimal(txtRoomPrice.Text);
+
+                    // Call service method to update room
+                    roomService.Update(selectedRoom);
+                    MessageBox.Show("Update successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    clearRoom();
+                    pageLoad();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Update fail! Error: {ex.Message}", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a room to update.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void btnRoomDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            if (ListRoom.SelectedItem != null)
+            {
+                var selectedRoom = ListRoom.SelectedItem as Room;
+                if (selectedRoom != null)
+                {
+                    try
+                    {
+                        roomService.Delete(selectedRoom);
+                        MessageBox.Show("Delete successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        clearRoom();
+                        pageLoad();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Delete fail! Error: {ex.Message}", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a room to delete.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void btnRoomSearch_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                // Get room ID from user input
+                if (!int.TryParse(txtRoomSearch.Text.Trim(), out int roomId))
+                {
+                    MessageBox.Show("Please enter a valid Room ID.", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
+                // Call service method to search for rooms by Room ID
+                var rooms = roomService.SearchByRoomID(roomId);
+
+                if (rooms.Count > 0)
+                {
+                    // Bind search results to ListRoom
+                    ListRoom.ItemsSource = rooms;
+                }
+                else
+                {
+                    MessageBox.Show("No rooms found with the given Room ID.", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+                    // Clear ListRoom if no rooms found
+                    ListRoom.ItemsSource = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error searching rooms: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
@@ -399,10 +508,12 @@ namespace PROJECT
             ListService.SelectedItem = null;
         }
 
-         private void btnServiceSearch_Click(object sender, RoutedEventArgs e)
+        private void btnServiceSearch_Click(object sender, RoutedEventArgs e)
         {
-            var services = serviceService.SearchServices(txtServiceName.Text);
+            string searchTerm = txtServicerSearch.Text.Trim();
+            var services = serviceService.SearchServices(searchTerm);
             ListService.ItemsSource = services;
         }
+
     }
 }
