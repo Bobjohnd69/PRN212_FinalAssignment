@@ -13,3 +13,18 @@ D:\FPT\Semester 5\PRN212\PROJECT\Repository\obj\Debug\net8.0\refint\Repository.d
 D:\FPT\Semester 5\PRN212\PROJECT\Repository\obj\Debug\net8.0\Repository.pdb
 D:\FPT\Semester 5\PRN212\PROJECT\Repository\obj\Debug\net8.0\Repository.genruntimeconfig.cache
 D:\FPT\Semester 5\PRN212\PROJECT\Repository\obj\Debug\net8.0\ref\Repository.dll
+C:\Users\THINH\source\repos\PRN212_F\Repository\bin\Debug\net8.0\Repository.deps.json
+C:\Users\THINH\source\repos\PRN212_F\Repository\bin\Debug\net8.0\Repository.runtimeconfig.json
+C:\Users\THINH\source\repos\PRN212_F\Repository\bin\Debug\net8.0\Repository.dll
+C:\Users\THINH\source\repos\PRN212_F\Repository\bin\Debug\net8.0\Repository.pdb
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\Repository.csproj.AssemblyReference.cache
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\Repository.AssemblyInfoInputs.cache
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\Repository.AssemblyInfo.cs
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\Repository.csproj.CoreCompileInputs.cache
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\Repository.sourcelink.json
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\Repository.dll
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\refint\Repository.dll
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\Repository.pdb
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\Repository.genruntimeconfig.cache
+C:\Users\THINH\source\repos\PRN212_F\Repository\obj\Debug\net8.0\ref\Repository.dll

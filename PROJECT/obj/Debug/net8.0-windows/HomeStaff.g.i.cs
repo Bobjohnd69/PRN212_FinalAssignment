@@ -109,7 +109,7 @@ namespace PROJECT {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PROJECT;V1.0.0.0;component/homestaff.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/PROJECT;component/homestaff.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\HomeStaff.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

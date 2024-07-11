@@ -4416,11 +4416,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\THINH\\Source\\Repos\\PRN212_\\Repository\\Repository.csproj",
+      "projectUniqueName": "C:\\Users\\THINH\\source\\repos\\PRN212_F\\Repository\\Repository.csproj",
       "projectName": "Repository",
-      "projectPath": "C:\\Users\\THINH\\Source\\Repos\\PRN212_\\Repository\\Repository.csproj",
+      "projectPath": "C:\\Users\\THINH\\source\\repos\\PRN212_F\\Repository\\Repository.csproj",
       "packagesPath": "C:\\Users\\THINH\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\THINH\\Source\\Repos\\PRN212_\\Repository\\obj\\",
+      "outputPath": "C:\\Users\\THINH\\source\\repos\\PRN212_F\\Repository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
