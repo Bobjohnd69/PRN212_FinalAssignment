@@ -35,6 +35,9 @@ namespace Repository.Services
             User user = dbSet.FirstOrDefault(x => x.Email == email && x.Password == password);
             return user;
         }
+        public List<User> SearchByFullName(string fullName)
+        {
+            return dbSet.Where(x => x.FullName.Contains(fullName)).ToList();
 
         public User GetByUserID(Guid userID)
         {
