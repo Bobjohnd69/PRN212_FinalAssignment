@@ -43,6 +43,9 @@ namespace PROJECT
             //tab 2
             var listRoom = roomService.GetAll();
             ListRoom.ItemsSource = listRoom;
+            //tab 3
+            var listService = serviceService.GetAll();
+            ListService.ItemsSource = listService;
 
         }
 
@@ -62,7 +65,39 @@ namespace PROJECT
             if (ListUser.SelectedItem != null)
             {
                 var selectedUser = ListUser.SelectedItem as User;
+                if (selectedUser != null)
+                {
+                    // Populate the input fields with the selected user's details
+                    txtUserFullName.Text = selectedUser.FullName;
+                    txtUserPhone.Text = selectedUser.Phone;
+                    txtUserEmail.Text = selectedUser.Email;
+                    txtUserBirthday.Text = selectedUser.Birthday.ToString("MM/dd/yyyy");
+                    txtUserPassword.Text = selectedUser.Password;
 
+                    // Set the status and role combo boxes to the selected user's status and role
+                    foreach (ComboBoxItem item in cmbUserStatus.Items)
+                    {
+                        if (item.Tag != null && item.Tag.ToString() == selectedUser.Status.ToString())
+                        {
+                            cmbUserStatus.SelectedItem = item;
+                            break;
+                        }
+                    }
+
+                    foreach (ComboBoxItem item in cmbUserRole.Items)
+                    {
+                        if (item.Content != null && item.Content.ToString() == selectedUser.Role)
+                        {
+                            cmbUserRole.SelectedItem = item;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Clear the input fields if no user is selected
+                clearUser();
             }
         }
         private void btnUserAdd_Click(object sender, RoutedEventArgs e)
@@ -113,63 +148,60 @@ namespace PROJECT
         }
         private void btnUserUpdate_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (ListUser.SelectedItem != null)
             {
-                if (ListUser.SelectedItem == null)
+                try
                 {
-                    MessageBox.Show("Please select a user to update.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
+                    var selectedUser = ListUser.SelectedItem as User;
+                    if (selectedUser == null)
+                    {
+                        MessageBox.Show("Selected user is invalid.", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Validate input fields
+                    if (string.IsNullOrEmpty(txtUserFullName.Text) ||
+                        string.IsNullOrEmpty(txtUserPhone.Text) ||
+                        string.IsNullOrEmpty(txtUserEmail.Text) ||
+                        string.IsNullOrEmpty(txtUserBirthday.Text) ||
+                        string.IsNullOrEmpty(txtUserPassword.Text) ||
+                        cmbUserStatus.SelectedItem == null ||
+                        cmbUserRole.SelectedItem == null)
+                    {
+                        MessageBox.Show("All fields must be filled in.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    // Parse the birthday
+                    if (!DateOnly.TryParse(txtUserBirthday.Text, out DateOnly datetime))
+                    {
+                        MessageBox.Show("Wrong format Date!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Update selected user object
+                    selectedUser.FullName = txtUserFullName.Text;
+                    selectedUser.Phone = txtUserPhone.Text;
+                    selectedUser.Email = txtUserEmail.Text;
+                    selectedUser.Birthday = datetime;
+                    selectedUser.Role = (cmbUserRole.SelectedItem as ComboBoxItem)?.Content.ToString();
+                    selectedUser.Status = Convert.ToInt32((cmbUserStatus.SelectedItem as ComboBoxItem)?.Tag);
+                    selectedUser.Password = txtUserPassword.Text;
+
+                    // Call service method to update user
+                    userService.Update(selectedUser);
+                    MessageBox.Show("Update successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    clearUser();
+                    pageLoad();
                 }
-
-                var selectedUser = ListUser.SelectedItem as User;
-                if (selectedUser == null)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Selected user is invalid.", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    MessageBox.Show($"Update fail! Error: {ex.Message}", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                // Validate input fields
-                if (string.IsNullOrEmpty(txtUserFullName.Text) ||
-                    string.IsNullOrEmpty(txtUserPhone.Text) ||
-                    string.IsNullOrEmpty(txtUserEmail.Text) ||
-                    string.IsNullOrEmpty(txtUserBirthday.Text) ||
-                    string.IsNullOrEmpty(txtUserPassword.Text) ||
-                    cmbUserStatus.SelectedItem == null ||
-                    cmbUserRole.SelectedItem == null)
-                {
-                    MessageBox.Show("All fields must be filled in.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                // Parse the birthday
-                if (!DateOnly.TryParse(txtUserBirthday.Text, out DateOnly datetime))
-                {
-                    MessageBox.Show("Wrong format Date!", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                // Create a new User object with updated details
-                var updatedUser = new User
-                {
-                    UserId = selectedUser.UserId,
-                    FullName = txtUserFullName.Text,
-                    Phone = txtUserPhone.Text,
-                    Email = txtUserEmail.Text,
-                    Birthday = datetime,
-                    Role = (cmbUserRole.SelectedItem as ComboBoxItem)?.Content.ToString(),
-                    Status = Convert.ToInt32((cmbUserStatus.SelectedItem as ComboBoxItem)?.Tag),
-                    Password = txtUserPassword.Text
-                };
-
-                // Update user using the service method
-                userService.Update(updatedUser);
-                MessageBox.Show("Update successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                clearUser();
-                pageLoad();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Update fail! Error: {ex.Message}", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select a user to update.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -228,12 +260,30 @@ namespace PROJECT
 
         private void ListRoom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /* if (ListRoom.SelectedItem != null)
+            if (ListRoom.SelectedItem != null)
             {
-                Room selected = (Room)ListRoom.SelectedItem;
-              
-            }*/
+                var selectedRoom = ListRoom.SelectedItem as Room;
+                if (selectedRoom != null)
+                {
+                    // Display room details in UI controls
+                    txtRoomId.Text = selectedRoom.RoomId.ToString();
+                    txtRoomDetail.Text = selectedRoom.RoomDetail;
+                    txtRoomCapacity.Text = selectedRoom.RoomCapacity.ToString();
+                    txtRoomType.Text = selectedRoom.RoomType;
+                    // Set selected value in ComboBox for RoomStatus
+                    cmbRoomStatus.SelectedValue = selectedRoom.RoomStatus;
+
+                    // Format decimal value for Price
+                    txtRoomPrice.Text = selectedRoom.Price.ToString();
+                }
+            }
+            else
+            {
+                // Clear UI controls if no room is selected
+                clearRoom();
+            }
         }
+
 
         private void btnRoomClear_Click(object sender, RoutedEventArgs e)
         {
@@ -297,41 +347,83 @@ namespace PROJECT
         }
         private void btnRoomUpdate_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void btnRoomDelete_Click(object sender, RoutedEventArgs e)
-        {
             if (ListRoom.SelectedItem != null)
             {
-                var selectedRoom = ListRoom.SelectedItem as Room;
-                if (selectedRoom != null)
+                try
                 {
-                    try
+                    var selectedRoom = ListRoom.SelectedItem as Room;
+                    if (selectedRoom == null)
                     {
-                        roomService.Delete(selectedRoom);
-                        MessageBox.Show("Delete successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                        clearUser();
-                        pageLoad();
+                        MessageBox.Show("Selected room is invalid.", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
-                    catch (Exception ex)
+
+                    // Validate input fields
+                    if (string.IsNullOrEmpty(txtRoomDetail.Text) ||
+                        string.IsNullOrEmpty(txtRoomCapacity.Text) ||
+                        string.IsNullOrEmpty(txtRoomType.Text) ||
+                        string.IsNullOrEmpty(txtRoomPrice.Text) ||
+                        cmbRoomStatus.SelectedItem == null)
                     {
-                        MessageBox.Show($"Delete fail! Error: {ex.Message}", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("All fields must be filled in.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
                     }
+
+                    // Update selected room object
+                    selectedRoom.RoomDetail = txtRoomDetail.Text;
+                    selectedRoom.RoomCapacity = Convert.ToInt32(txtRoomCapacity.Text);
+                    selectedRoom.RoomType = txtRoomType.Text;
+                    selectedRoom.RoomStatus = Convert.ToByte(((ComboBoxItem)cmbRoomStatus.SelectedItem).Tag);
+                    selectedRoom.Price = Convert.ToDecimal(txtRoomPrice.Text);
+
+                    // Call service method to update room
+                    roomService.Update(selectedRoom);
+                    MessageBox.Show("Update successful", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    clearRoom();
+                    pageLoad();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Update fail! Error: {ex.Message}", "Admin", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Please select a room to delete.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please select a room to update.", "Admin", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
-        private void btnRoomSearch_Click(object sender, RoutedEventArgs e)
+        private void btnRoomDelete_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        // control tab 3
+        private void btnServiceDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (ListService.SelectedItem is Service selectedService)
+            {
+                serviceService.Delete(selectedService);
+                pageLoad();
+                MessageBox.Show("Delete successful", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Please select a service to delete.", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void btnServiceClear_Click(object sender, RoutedEventArgs e)
+        {
+            txtServiceName.Clear();
+            ListService.SelectedItem = null;
+        }
+
+        private void btnServiceSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string searchTerm = txtServicerSearch.Text.Trim();
+            var services = serviceService.SearchServices(searchTerm);
+            ListService.ItemsSource = services;
+        }
 
     }
 }

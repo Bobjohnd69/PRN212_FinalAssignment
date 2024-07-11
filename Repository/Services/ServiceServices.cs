@@ -19,9 +19,10 @@ namespace Repository.Services
             dbSet = context.Set<Service>();
         }
 
-        public List<Service> GetAllServices()
+        public List<Service> SearchServices(string searchTerm)
         {
-            return dbSet.ToList();
+            return dbSet.Where(s => s.ServiceName.Contains(searchTerm)).ToList();
         }
+
     }
 }
