@@ -28,5 +28,10 @@ namespace Repository.Services
         {
             return dbSet.Where(x => x.RoomStatus == status).ToList();
         }
+
+        public Room GetByRoomId(int roomId)
+        {
+            return dbSet.FirstOrDefault(x => x.RoomId == roomId);
+        }
     }
 }
