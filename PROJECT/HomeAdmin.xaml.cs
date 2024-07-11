@@ -261,7 +261,7 @@ namespace PROJECT
                 room.RoomCapacity = Convert.ToInt32(txtRoomCapacity.Text);
                 room.RoomType = txtRoomType.Text;
                 room.Price = Convert.ToDecimal(txtRoomPrice.Text);
-                room.RoomStatus = Convert.ToInt32(selectedStatusItem.Tag);
+                room.RoomStatus = Convert.ToInt32(cmbRoomStatus.Tag);
                 bool roomIdExists = ((List<Room>)ListRoom.ItemsSource).Any(r => r.RoomId == room.RoomId);
                 if (roomIdExists)
                 {
