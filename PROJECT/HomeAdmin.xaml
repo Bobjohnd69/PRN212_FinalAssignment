@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PROJECT"
         mc:Ignorable="d"
-               Title="HomeAdmin" Height="800" Width="1400" ResizeMode="NoResize" Closing="Window_Closing" >
+                  Title="HomeAdmin" Height="800" Width="1400" ResizeMode="NoResize" Closing="Window_Closing" >
     <Grid Background="#B7B2B2">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="668*"/>
@@ -15,15 +15,14 @@
             <TabItem Header="User">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="67*"/>
-                        <ColumnDefinition Width="16*"/>
+                        <ColumnDefinition Width="83*"/>
                         <ColumnDefinition Width="1102*"/>
                         <ColumnDefinition Width="209*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView Margin="10,27,428,150" x:Name="ListUser" Grid.ColumnSpan="3" SelectionChanged="ListUser_SelectionChanged">
+                    <ListView Margin="10,27,428,150" x:Name="ListUser" Grid.ColumnSpan="2" SelectionChanged="ListUser_SelectionChanged">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="userID" DisplayMemberBinding="{Binding Path=UserId}"/>
+                                <GridViewColumn Header="userID" DisplayMemberBinding="{Binding Path=UserId}" Width="50"/>
                                 <GridViewColumn Header="fullname" DisplayMemberBinding="{Binding Path=FullName}"/>
                                 <GridViewColumn Header="phone" DisplayMemberBinding="{Binding Path=Phone}"/>
                                 <GridViewColumn Header="email" DisplayMemberBinding="{Binding Path=Email}"/>
@@ -34,30 +33,30 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Rectangle HorizontalAlignment="Left" Height="303" Margin="700,27,0,0" Stroke="Black" VerticalAlignment="Top" Width="585" Fill="#B7B2B2" Grid.Column="2" Grid.ColumnSpan="2"/>
-                    <Label Content="FullName" HorizontalAlignment="Left" Margin="928,54,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-                    <Label Content="TelePhone" HorizontalAlignment="Left" Margin="21,54,0,0" VerticalAlignment="Top" Grid.Column="3"/>
-                    <Label Content="EmailAddress" HorizontalAlignment="Left" Margin="729,132,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-                    <Label Content="BirthDay" HorizontalAlignment="Left" Margin="928,132,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-                    <Label Content="Status" HorizontalAlignment="Left" Margin="729,222,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-                    <Label Content="Password" HorizontalAlignment="Left" Margin="929,222,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-                    <TextBox x:Name="txtUserFullName" HorizontalAlignment="Left" Margin="928,85,0,0" TextWrapping="Wrap" Text="{Binding SelectedItem.FullName, ElementName=ListUser, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="140" Height="28" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2"/>
-                    <TextBox x:Name="txtUserPhone" HorizontalAlignment="Left" Margin="21,85,0,0" TextWrapping="Wrap" Text="{Binding SelectedItem.Phone, ElementName=ListUser, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="140" Height="28" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="3"/>
-                    <TextBox x:Name="txtUserEmail" HorizontalAlignment="Left" Margin="729,160,0,0" TextWrapping="Wrap" Text="{Binding SelectedItem.Email, ElementName=ListUser, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="140" Height="40" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2"/>
-                    <TextBox x:Name="txtUserBirthday" HorizontalAlignment="Left" Margin="928,160,0,0" TextWrapping="Wrap" Text="{Binding SelectedItem.Birthday, ElementName=ListUser, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="140" Height="40" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2"/>
-                    <TextBox x:Name="txtUserPassword" HorizontalAlignment="Left" Margin="928,250,0,0" TextWrapping="Wrap" Text="{Binding SelectedItem.Password, ElementName=ListUser, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="140" Height="28" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2"/>
-                    <Button x:Name="btnUserAdd" Content="Add" HorizontalAlignment="Left" Margin="704,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserAdd_Click" Grid.Column="2"/>
-                    <Button x:Name="btnUserUpdate" Content="Update" HorizontalAlignment="Left" Margin="865,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserUpdate_Click" Grid.Column="2"/>
-                    <Button x:Name="btnUserDelete" Content="Delete" HorizontalAlignment="Left" Margin="1041,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserDelete_Click" Grid.Column="2" Grid.ColumnSpan="2"/>
-                    <Button x:Name="btnUserClear" Content="Clear" HorizontalAlignment="Left" Margin="111,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserClear_Click" Grid.Column="3"/>
-                    <TextBox x:Name="txUserSearch" HorizontalAlignment="Left" Margin="10,568,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.ColumnSpan="3"/>
-                    <Button x:Name="btnUserSearch" Content="Search By Name" HorizontalAlignment="Left" Margin="73,569,0,0" VerticalAlignment="Top" Height="25" Width="108" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserSearch_Click" Grid.Column="2" />
-                    <ComboBox x:Name="cmbUserRole" Grid.Column="3" HorizontalAlignment="Left" Margin="21,163,0,0" VerticalAlignment="Top" Width="140" SelectedValue="{Binding SelectedItem.Role, ElementName=ListUser, UpdateSourceTrigger=PropertyChanged}">
+                    <Rectangle HorizontalAlignment="Left" Height="303" Margin="700,27,0,0" Stroke="Black" VerticalAlignment="Top" Width="585" Fill="#B7B2B2" Grid.Column="1" Grid.ColumnSpan="2"/>
+                    <Label Content="FullName" HorizontalAlignment="Left" Margin="928,54,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <Label Content="TelePhone" HorizontalAlignment="Left" Margin="21,54,0,0" VerticalAlignment="Top" Grid.Column="2"/>
+                    <Label Content="EmailAddress" HorizontalAlignment="Left" Margin="729,132,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <Label Content="BirthDay" HorizontalAlignment="Left" Margin="928,132,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <Label Content="Status" HorizontalAlignment="Left" Margin="729,222,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <Label Content="Password" HorizontalAlignment="Left" Margin="929,222,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <TextBox x:Name="txtUserFullName" HorizontalAlignment="Left" Margin="928,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="28" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1"/>
+                    <TextBox x:Name="txtUserPhone" HorizontalAlignment="Left" Margin="21,85,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="140" Height="28" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2"/>
+                    <TextBox x:Name="txtUserEmail" HorizontalAlignment="Left" Margin="729,160,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="140" Height="40" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1"/>
+                    <TextBox x:Name="txtUserBirthday" HorizontalAlignment="Left" Margin="928,160,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="140" Height="40" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1"/>
+                    <TextBox x:Name="txtUserPassword" HorizontalAlignment="Left" Margin="928,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="28" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1"/>
+                    <Button x:Name="btnUserAdd" Content="Add" HorizontalAlignment="Left" Margin="704,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserAdd_Click" Grid.Column="1"/>
+                    <Button x:Name="btnUserUpdate" Content="Update" HorizontalAlignment="Left" Margin="865,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserUpdate_Click" Grid.Column="1"/>
+                    <Button x:Name="btnUserDelete" Content="Delete" HorizontalAlignment="Left" Margin="1041,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserDelete_Click" Grid.Column="1" Grid.ColumnSpan="2"/>
+                    <Button x:Name="btnUserClear" Content="Clear" HorizontalAlignment="Left" Margin="111,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserClear_Click" Grid.Column="2"/>
+                    <TextBox x:Name="txUserSearch" HorizontalAlignment="Left" Margin="10,568,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
+                    <Button x:Name="btnUserSearch" Content="Search By Name" HorizontalAlignment="Left" Margin="73,569,0,0" VerticalAlignment="Top" Height="25" Width="108" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnUserSearch_Click" Grid.Column="1" />
+                    <ComboBox x:Name="cmbUserRole" Grid.Column="2" HorizontalAlignment="Left" Margin="21,163,0,0" VerticalAlignment="Top" Width="140">
                         <ComboBoxItem Content="Admin" />
                         <ComboBoxItem Content="Staff"/>
                     </ComboBox>
-                    <Label Content="Role" HorizontalAlignment="Left" Margin="21,132,0,0" VerticalAlignment="Top" Grid.Column="3"/>
-                    <ComboBox x:Name="cmbUserStatus" Grid.Column="2" HorizontalAlignment="Left" Margin="729,256,0,0" VerticalAlignment="Top" Width="120">
+                    <Label Content="Role" HorizontalAlignment="Left" Margin="21,132,0,0" VerticalAlignment="Top" Grid.Column="2"/>
+                    <ComboBox x:Name="cmbUserStatus" Grid.Column="1" HorizontalAlignment="Left" Margin="729,256,0,0" VerticalAlignment="Top" Width="120">
                         <ComboBoxItem Content="Active" Tag="1"/>
                         <ComboBoxItem Content="Inactive" Tag="0"/>
                     </ComboBox>
@@ -66,13 +65,15 @@
             <TabItem Header="Room" HorizontalAlignment="Left" Width="43">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="26*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="18*"/>
                         <ColumnDefinition Width="69*"/>
                         <ColumnDefinition Width="49*"/>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="1200*"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="80*"/>
+                        <ColumnDefinition Width="1120*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView Margin="10,27,637,150" x:Name="ListRoom" Grid.ColumnSpan="5" SelectionChanged="ListRoom_SelectionChanged">
+                    <ListView Margin="2,27,637,150" x:Name="ListRoom" Grid.ColumnSpan="6" SelectionChanged="ListRoom_SelectionChanged" Grid.Column="1">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="RoomId" DisplayMemberBinding="{Binding Path=RoomId}"/>
@@ -84,28 +85,28 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Rectangle HorizontalAlignment="Left" Height="303" Margin="589,27,0,0" Stroke="Black" VerticalAlignment="Top" Width="585" Fill="#B7B2B2" Grid.Column="4"/>
-                    <Label Content="RoomId" HorizontalAlignment="Left" Margin="618,54,0,0" VerticalAlignment="Top" Grid.Column="4"/>
-                    <Label Content="DetailDescription" HorizontalAlignment="Left" Margin="1012,54,0,0" VerticalAlignment="Top" Grid.Column="4"/>
-                    <Label Content="MaxCapacity" HorizontalAlignment="Left" Margin="618,132,0,0" VerticalAlignment="Top" Grid.Column="4"/>
-                    <Label Content="Room Type" HorizontalAlignment="Left" Margin="817,132,0,0" VerticalAlignment="Top" Grid.Column="4"/>
-                    <Label Content="Status" HorizontalAlignment="Left" Margin="618,222,0,0" VerticalAlignment="Top" Grid.Column="4"/>
-                    <Label Content="PricePerDay" HorizontalAlignment="Left" Margin="818,222,0,0" VerticalAlignment="Top" Grid.Column="4"/>
-                    <TextBox x:Name="txtRoomId" HorizontalAlignment="Left" Margin="618,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="107" Height="28" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="4"/>
-                    <TextBox x:Name="txtRoomDetail" HorizontalAlignment="Left" Margin="1012,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="150" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Top" Grid.Column="4"/>
-                    <TextBox x:Name="txtRoomCapacity" HorizontalAlignment="Left" Margin="618,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="40" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="4"/>
-                    <TextBox x:Name="txtRoomType" HorizontalAlignment="Left" Margin="817,160,0,0" VerticalAlignment="Top" Width="140" Height="40" HorizontalContentAlignment="Center" Grid.Column="4"  VerticalContentAlignment="Center" />
-                    <ComboBox x:Name="cmbRoomStatus" Grid.Column="4" HorizontalAlignment="Left" Margin="618,256,0,0" VerticalAlignment="Top" Width="140">
+                    <Rectangle HorizontalAlignment="Left" Height="303" Margin="509,27,0,0" Stroke="Black" VerticalAlignment="Top" Width="585" Fill="#B7B2B2" Grid.Column="6"/>
+                    <Label Content="RoomId" HorizontalAlignment="Left" Margin="538,54,0,0" VerticalAlignment="Top" Grid.Column="6"/>
+                    <Label Content="DetailDescription" HorizontalAlignment="Left" Margin="932,54,0,0" VerticalAlignment="Top" Grid.Column="6"/>
+                    <Label Content="MaxCapacity" HorizontalAlignment="Left" Margin="538,132,0,0" VerticalAlignment="Top" Grid.Column="6"/>
+                    <Label Content="Room Type" HorizontalAlignment="Left" Margin="737,132,0,0" VerticalAlignment="Top" Grid.Column="6"/>
+                    <Label Content="Status" HorizontalAlignment="Left" Margin="538,222,0,0" VerticalAlignment="Top" Grid.Column="6"/>
+                    <Label Content="PricePerDay" HorizontalAlignment="Left" Margin="738,222,0,0" VerticalAlignment="Top" Grid.Column="6"/>
+                    <TextBox x:Name="txtRoomId" HorizontalAlignment="Left" Margin="538,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="107" Height="28" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="6"/>
+                    <TextBox x:Name="txtRoomDetail" HorizontalAlignment="Left" Margin="932,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="150" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Top" Grid.Column="6"/>
+                    <TextBox x:Name="txtRoomCapacity" HorizontalAlignment="Left" Margin="538,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="40" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="6"/>
+                    <TextBox x:Name="txtRoomType" HorizontalAlignment="Left" Margin="737,160,0,0" VerticalAlignment="Top" Width="140" Height="40" HorizontalContentAlignment="Center" Grid.Column="6"  VerticalContentAlignment="Center" />
+                    <ComboBox x:Name="cmbRoomStatus" Grid.Column="6" HorizontalAlignment="Left" Margin="538,256,0,0" VerticalAlignment="Top" Width="140">
                         <ComboBoxItem Content="Available" Tag="1"/>
                         <ComboBoxItem Content="Unavailable" Tag="0"/>
                     </ComboBox>
-                    <TextBox x:Name="txtRoomPrice" HorizontalAlignment="Left" Margin="817,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="28" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="4"/>
-                    <Button x:Name="btnRoomAdd" Content="Add" HorizontalAlignment="Left" Margin="593,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="4" Click="btnRoomAdd_Click"/>
-                    <Button x:Name="btnRoomUpdate" Content="Update" HorizontalAlignment="Left" Margin="754,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="4" Click="btnRoomUpdate_Click"/>
-                    <Button x:Name="btnRoomDelete" Content="Delete" HorizontalAlignment="Left" Margin="930,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="4" Click="btnRoomDelete_Click"/>
-                    <Button x:Name="btnRoomClear" Content="Clear" HorizontalAlignment="Left" Margin="1102,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnRoomClear_Click" Grid.Column="4"/>
-                    <TextBox x:Name="txtRoomSearch" HorizontalAlignment="Left" Margin="10,568,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.ColumnSpan="3"/>
-                    <Button x:Name="btnRoomSearch" Content="Search By Room Number" HorizontalAlignment="Left" Margin="12,569,0,0" VerticalAlignment="Top" Height="25" Width="152" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="3" Click="btnRoomSearch_Click" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="txtRoomPrice" HorizontalAlignment="Left" Margin="737,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="28" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.Column="6"/>
+                    <Button x:Name="btnRoomAdd" Content="Add" HorizontalAlignment="Left" Margin="513,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="6" Click="btnRoomAdd_Click"/>
+                    <Button x:Name="btnRoomUpdate" Content="Update" HorizontalAlignment="Left" Margin="674,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="6" Click="btnRoomUpdate_Click"/>
+                    <Button x:Name="btnRoomDelete" Content="Delete" HorizontalAlignment="Left" Margin="850,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="6" Click="btnRoomDelete_Click"/>
+                    <Button x:Name="btnRoomClear" Content="Clear" HorizontalAlignment="Left" Margin="1022,381,0,0" VerticalAlignment="Top" Height="33" Width="72" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Click="btnRoomClear_Click" Grid.Column="6"/>
+                    <TextBox x:Name="txtRoomSearch" HorizontalAlignment="Left" Margin="2,568,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26" HorizontalContentAlignment="Center" TextAlignment="Left" VerticalContentAlignment="Center" Grid.ColumnSpan="3" Grid.Column="1"/>
+                    <Button x:Name="btnRoomSearch" Content="Search By Room Number" HorizontalAlignment="Left" Margin="12,569,0,0" VerticalAlignment="Top" Height="25" Width="152" Background="#B7B2B2" Foreground="White" FontWeight="Bold" Grid.Column="4" Click="btnRoomSearch_Click" Grid.ColumnSpan="3"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Service" HorizontalAlignment="Left" Width="43">
@@ -121,7 +122,7 @@
                     <ListView Margin="7,27,760,150" x:Name="ListService" Grid.ColumnSpan="5" SelectionChanged="ListService_SelectionChanged" Grid.Column="1">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="ServiceId" DisplayMemberBinding="{Binding Path=ServiceId}"  Width="300"/>
+                                <GridViewColumn Header="ServiceId" DisplayMemberBinding="{Binding Path=ServiceId}" Width="70"/>
                                 <GridViewColumn Header="ServiceName" DisplayMemberBinding="{Binding Path=ServiceName}" Width="300"/>
 
                             </GridView>

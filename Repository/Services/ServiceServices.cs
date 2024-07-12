@@ -20,6 +20,7 @@ namespace Repository.Services
         }
 
         public List<Service> SearchServices(string searchTerm)
+        public List<Service> SearchServices(string searchTerm)
         {
             return dbSet.Where(s => s.ServiceName.Contains(searchTerm)).ToList();
         }
