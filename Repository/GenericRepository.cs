@@ -22,7 +22,6 @@ namespace Repository
         public List<T> GetAll()
         {
             return _dbSet.ToList();
-
         }
 
         public void Add(T entity)
